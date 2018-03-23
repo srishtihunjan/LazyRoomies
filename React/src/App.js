@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
-import ShoppingList from './containers/ShoppingList/ShoppingList';
+import TaskManager from './containers/TaskManager/TaskManager';
+
 class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
         <div className="App">
-          <ShoppingList />
+          <TaskManager />
         </div>
       </MuiThemeProvider>
     );
