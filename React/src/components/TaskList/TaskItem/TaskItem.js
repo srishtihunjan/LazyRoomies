@@ -1,13 +1,17 @@
 import React from 'react';
 import classes from './TaskItem.css';
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 const taskItem = (props) => {
     const cardHeaderChildren = (<div className={classes.flexContainer}>
         <p className={classes.headers}><strong>{props.task.name}</strong></p>
         <p className={classes.headers}> Assigned to: {props.task.assignedTo}</p> </div>);
 
+const style = {
+    margin: 12,
+};
     return (
         <Card>
             <CardHeader
@@ -16,7 +20,8 @@ const taskItem = (props) => {
                 showExpandableButton={true}
             />
             <CardActions>
-                <FlatButton label="Edit" onClick={() => props.editTask(props.task, props.index)} />
+            <RaisedButton label="Edit" primary={true} style={style}  onClick={() => props.editTask(props.task, props.index)} />
+                {/* <FlatButton label="Edit" onClick={() => props.editTask(props.task, props.index)} />  */}
             </CardActions>
             <CardText expandable={true}>
                 {props.task.description}
