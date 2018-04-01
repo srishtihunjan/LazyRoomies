@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
-import ShoppingList from './containers/ShoppingList/ShoppingList';
+import Root from './containers/Root/Root';
+import { BrowserRouter } from 'react-router-dom';
+
+
 class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div className="App">
-          <ShoppingList />
-        </div>
+        <BrowserRouter>
+          <div className="App">
+            <Root />
+          </div>
+        </BrowserRouter>
       </MuiThemeProvider>
     );
   }

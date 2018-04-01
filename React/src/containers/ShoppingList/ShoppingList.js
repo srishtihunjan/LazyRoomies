@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './ShoppingList.css';
-import ListItems from '../../components/ListItems/ListItems'
+import ListItems from '../../components/ListItems/ListItems';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class ShoppingList extends Component {
 
@@ -19,7 +20,7 @@ class ShoppingList extends Component {
     }
  
     enterPressedHandler = (env, index) => {
-        if(env.key === 'Enter'){
+        if (env.key === 'Enter') {
             console.log("Enter pressed");
             let oldList = this.state.list;
             let newList = [...oldList];
@@ -30,13 +31,16 @@ class ShoppingList extends Component {
         }
     }
     render() {
+        const style = {
+            margin: 12,
+        };
         return (
             <div className={classes.ListContainer}>
-                <ListItems listItems={this.state.list} 
-                inputChangeHandler={this.inputChangeHandler}
-                enterPressedHandler={this.enterPressedHandler} />
+                <ListItems listItems={this.state.list}
+                    inputChangeHandler={this.inputChangeHandler}
+                    enterPressedHandler={this.enterPressedHandler} />
                 <div>
-                    <button>Save</button>
+                    <RaisedButton label="Save List" primary={true} style={style} />
                 </div>
             </div>
         );
