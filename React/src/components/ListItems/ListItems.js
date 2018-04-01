@@ -4,10 +4,10 @@ import ListItem from './ListItem/ListItem';
 const listItems = (props) => {
 
     let items = props.listItems.map((item, index) => {
-        return <ListItem key={index} 
+        return <ListItem key={item.key} 
         index={index} 
         item={item} 
-        inputHandler={(event) => props.inputChangeHandler(event, index)}
+        onChange={(event, newValue) => props.inputChangeHandler(event, newValue, index)}
         enterPressedHandler={(env) => props.enterPressedHandler(env, index)} />;
     });
     console.log(items);
