@@ -57,3 +57,10 @@ typings/
 # dotenv environment variables file
 .env
 
+# ignore data folder which hold mongoDB data
+data/
+
+#ignore views for the time being
+error.jade
+index.jade
+layout.jade
