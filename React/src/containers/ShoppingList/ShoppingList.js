@@ -17,7 +17,7 @@ class ShoppingList extends Component {
         newList[index]=value;
         this.setState({list: newList});
     }
-
+ 
     enterPressedHandler = (env, index) => {
         if(env.key === 'Enter'){
             console.log("Enter pressed");
