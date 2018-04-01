@@ -57,6 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+#ignore node_modules
+node_modules/
+
 # ignore data folder which hold mongoDB data
 data/
 
@@ -64,3 +67,6 @@ data/
 error.jade
 index.jade
 layout.jade
+
+
+settings.json
