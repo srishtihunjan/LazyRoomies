@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
-import TaskManager from './containers/TaskManager/TaskManager';
+import Root from './containers/Root/Root';
+import { BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div className="App">
-          <TaskManager />
-        </div>
+        <BrowserRouter>
+          <div className="App">
+            <Root />
+          </div>
+        </BrowserRouter>
       </MuiThemeProvider>
     );
   }
