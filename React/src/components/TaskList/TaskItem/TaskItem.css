@@ -1,3 +1,16 @@
 .Title{
 
 }
+
+.flexContainer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .headers {
+    width: 30%;
+    margin: 10%;
+    text-align: center;
+    line-height: 75px;
+    text-align: center;
+  }
