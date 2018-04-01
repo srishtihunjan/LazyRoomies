@@ -6,29 +6,28 @@ import RaisedButton from 'material-ui/RaisedButton';
 class ShoppingList extends Component {
 
     state = {
-        list: ['firstItem', 'secondItem']
+        list: [{key: "1", value: 'firstItem'}, 
+            {key: "2", value: 'secondItem'}]
     }
 
-
-
-    inputChangeHandler = (event, index) => {
-        let value = event.target.value;
-        console.log(value);
-        console.log(index);
+    inputChangeHandler = (event, newValue, index) => {;
         let oldList = this.state.list;
         let newList = [...oldList];
-        newList[index] = value;
-        this.setState({ list: newList });
+        newList[index].value=newValue;
+        console.log("oldList"+oldList);
+        console.log("newList"+newList);
+        this.setState({list: newList});
     }
-
+ 
     enterPressedHandler = (env, index) => {
         if (env.key === 'Enter') {
             console.log("Enter pressed");
             let oldList = this.state.list;
             let newList = [...oldList];
-            newList.splice(index + 1, 0, '');
-            console.log("New list: " + newList)
-            this.setState({ list: newList });
+            newList.splice(index+1, 0,{key:Math.random().toString(), value: ''});
+            console.log("Old State: "+ oldList);
+            console.log("New list: "+newList)
+            this.setState({list: newList});
         }
     }
     render() {
