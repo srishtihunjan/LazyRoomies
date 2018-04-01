@@ -6,7 +6,8 @@ class Login extends Component {
 
   state={
     email: "",
-    password: ""
+    password: "",
+    emailError: null
   }
 
   handleEmailChange = (event, newValue) => {
@@ -24,6 +25,7 @@ class Login extends Component {
     }
     else{
       console.log("invalid email");
+      this.setState({emailError: true});
     }
     console.log(this.state);
   }
@@ -40,12 +42,16 @@ class Login extends Component {
       credentials=sessionStorage.getItem("email");
       console.log("Email set : "+credentials);
     }
+    let errorMessage = null;
+    if(this.state.emailError)
+      errorMessage = "This Email is invalid"
 
     return (
       <div className={classes.Login} >
         <TextField id="Email"
           hintText="Email Id"
           floatingLabelText="Email" 
+          errorText={errorMessage}
           value={this.state.email}
           onChange={this.handleEmailChange}/>
         <TextField id="Password"
