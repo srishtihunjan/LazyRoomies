@@ -3,6 +3,7 @@ import { Route, NavLink } from 'react-router-dom';
 import TaskManager from '../TaskManager/TaskManager';
 import ShoppingList from '../ShoppingList/ShoppingList';
 import Login from '../Login/Login';
+import Signup from '../Signup/Signup';
 import classes from './Root.css';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
@@ -23,6 +24,7 @@ class Root extends Component {
                 <Route path='/' exact component={TaskManager} />
                 <Route path='/shopping-list' exact render={() => <ShoppingList />} />
                 <Route path='/login' exact component={Login} />
+                <Route path='/signup' exact component={Signup} />
             </div>
         );
     }
