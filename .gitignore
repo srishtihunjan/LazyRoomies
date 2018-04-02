@@ -70,3 +70,5 @@ layout.jade
 
 
 settings.json
+.eslintrc.json
+package-lock.json

@@ -83,7 +83,7 @@ router.post('/', function (req, res, next) {
         return;
       }
       console.log('Apt created with ID = ' + response._id);
-      user.findByIdAndUpdate(req.body.userId, { apartmentID: req.body.name }, function (err2, update_response) {
+      user.findByIdAndUpdate(req.body.userId, { apartmentName: req.body.name }, function (err2, update_response) {
         if (err2) {
           console.log(err2);
           res.status(500).send("Error creating apartment");
