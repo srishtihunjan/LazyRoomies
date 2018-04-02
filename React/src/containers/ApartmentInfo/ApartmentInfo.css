@@ -1,0 +1,16 @@
+.ApartmentInfo {
+    margin-left: 20%
+}
+
+.Apartment {
+    color: pink;
+    font: bold;
+    font-size: large;
+}
+.User {
+    color: black
+}
+
+.CurrentUser {
+    color: red
+}
