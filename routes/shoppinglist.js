@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var path = require('path');
-var app = require('../app');
-var mongoose = require('mongoose');
+// var path = require('path');
+// var app = require('../app');
+// var mongoose = require('mongoose');
 var schema = require('../model/schema');
 var apartment = schema.Apartment;
 var dbQuery = require('../db_setup/db_setup');
@@ -10,13 +10,13 @@ var dbQuery = require('../db_setup/db_setup');
 var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 
-/* GET shopping list  by apartment Id*/
-router.get('/:apartmentId', function (req, res, next) {
+/* GET shopping list  by apartment Name */
+router.get('/:apartmentName', function (req, res, next) {
   dbQuery((db) => {
-    apartment.findById(req.params.apartmentId, 'shoppingList', function (err, response) {
+    apartment.find({ name: req.params.apartmentName }, 'shoppingList', function (err, response) {
       if (err) {
         console.log(err);
-        res.status(500).send("Error fetching shopping list");
+        res.status(500).send('Error fetching shopping list');
         db.close();
         return;
       }
@@ -28,23 +28,29 @@ router.get('/:apartmentId', function (req, res, next) {
   });
 });
 
-/* POST shopping list by apartment Id*/
+/* POST shopping list by apartment Name */
 router.post('/', function (req, res, next) {
   dbQuery((db) => {
-    let list = String(req.body.shoppingList).split(",");
-    let shopping_list = [];
-    for (item in list) {
-      shopping_list.push(list[item])
+    let list = String(req.body.shoppingList).split(',');
+    let shoppingList = [];
+    for (var item in list) {
+      shoppingList.push(list[item])
     }
-    apartment.findByIdAndUpdate(req.body.apartmentId, { shoppingList: shopping_list }, function (err, update_response) {
+    apartment.findOneAndUpdate({ name: req.body.apartmentId }, { shoppingList: shoppingList }, function (err, updateResponse) {
       if (err) {
         console.log(err);
-        res.status(500).send("Error updating shopping list");
+        res.status(500).send('Error updating shopping list');
         db.close();
         return;
       }
-      console.log('**ShoppingList inserted! ');
-      res.sendStatus(200);
+      if (updateResponse && updateResponse !== '') {
+        console.log('Apartment Exists. ShoppingList inserted! ' + updateResponse);
+        res.sendStatus(201);
+      } else {
+        console.log('Apartment DOSENT exist. ' + updateResponse);
+        res.status(400);
+        res.send('Apartment DOESNT exist!');
+      }
       db.close();
     });
   });
