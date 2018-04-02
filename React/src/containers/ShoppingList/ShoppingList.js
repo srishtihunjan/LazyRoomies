@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './ShoppingList.css';
 import ListItems from '../../components/ListItems/ListItems';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Redirect } from 'react-router-dom';
 
 class ShoppingList extends Component {
 
@@ -34,8 +35,16 @@ class ShoppingList extends Component {
         const style = {
             margin: 12,
         };
+
+        let redirect = null;
+        if(!sessionStorage.getItem('email'))
+            redirect = <Redirect to="/login" />;
+        else if(!sessionStorage.getItem('apartmentName'))
+            redirect = <Redirect to="/apartment" />;
+        
         return (
             <div className={classes.ListContainer}>
+                {redirect}
                 <ListItems listItems={this.state.list}
                     inputChangeHandler={this.inputChangeHandler}
                     enterPressedHandler={this.enterPressedHandler} />
