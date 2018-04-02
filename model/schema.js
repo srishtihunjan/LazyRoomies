@@ -33,7 +33,8 @@ var taskSchema = new Schema({
         type: String
     },
     timeDue: {
-        type: String,
+        type: Date,
+        default: Date.now,
         required: [true, 'Err:Tasks must have a timeDue'],
     },
     dateDue: {
@@ -63,6 +64,7 @@ var apartmentSchema = new Schema({
     name: {
         type: String,
         required: [true, 'Err:Apartments must be given a name'],
+        unique: true
     },
     tasks: [taskSchema],
     shoppingList: [String]

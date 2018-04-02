@@ -10,24 +10,25 @@ var dbQuery = require('../db_setup/db_setup');
 var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 
-/* GET users listing. */
+/* GET shopping list  by apartment Id*/
 router.get('/:apartmentId', function (req, res, next) {
   dbQuery((db) => {
     apartment.findById(req.params.apartmentId, 'shoppingList', function (err, response) {
       if (err) {
         console.log(err);
-        res.statusCode(500).send("Error fetching shopping list");
+        res.status(500).send("Error fetching shopping list");
         db.close();
         return;
       }
       console.log('**ShoppingList queried! ' + response);
-      res.statusCode(200);
+      res.status(200);
       res.send(response);
       db.close();
     });
   });
 });
 
+/* POST shopping list by apartment Id*/
 router.post('/', function (req, res, next) {
   dbQuery((db) => {
     let list = String(req.body.shoppingList).split(",");
@@ -38,7 +39,7 @@ router.post('/', function (req, res, next) {
     apartment.findByIdAndUpdate(req.body.apartmentId, { shoppingList: shopping_list }, function (err, update_response) {
       if (err) {
         console.log(err);
-        res.statusCode(500).send("Error updating shopping list");
+        res.status(500).send("Error updating shopping list");
         db.close();
         return;
       }
