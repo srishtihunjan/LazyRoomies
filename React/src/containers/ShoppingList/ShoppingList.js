@@ -37,7 +37,7 @@ class ShoppingList extends Component {
         };
 
         let redirect = null;
-        if(!sessionStorage.getItem('email'))
+        if(!sessionStorage.getItem('userId'))
             redirect = <Redirect to="/login" />;
         else if(!sessionStorage.getItem('apartmentName'))
             redirect = <Redirect to="/apartment" />;
