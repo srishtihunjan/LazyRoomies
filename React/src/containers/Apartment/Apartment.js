@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import classes from './Apartment.css';
 import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+const config = require('../../Config/Config');
 
 class Apartment extends Component {
 
@@ -22,30 +24,61 @@ class Apartment extends Component {
 
     createNewApartment = () => {
         console.log("Create new apartment with name : "+this.state.newApartmentName);
-        sessionStorage.setItem('apartmentName', this.state.newApartmentName);
-        console.log("new apartment from session: "+ sessionStorage.getItem('apartmentName'));
-        this.props.history.push({pathname: '/'});
+        let req = {
+            userId: sessionStorage.getItem('userId'),
+            name: this.state.newApartmentName
+        };
+
+        axios.post(config.url + `apartments/`, { ...req })
+        .then(res => {
+            if(res.status === 201){
+                //user created
+                sessionStorage.setItem('apartmentName', this.state.newApartmentName);
+                //redirect to homepage    
+                this.props.history.push({pathname: '/'});
+            }
+        })
+        .catch(error => {
+            this.setState({newApartmentError: "Apartment with this name already exists"});
+        });
     }
 
-    joinExistingApartment =() => {
+    joinExistingApartment = () => {
         console.log("Join existing apartment with name : "+this.state.existingApartmentName);
-        sessionStorage.setItem('apartmentName', this.state.existingApartmentName);
+
+        let req = {
+            userId: sessionStorage.getItem('userId'),
+            apartmentName: this.state.existingApartmentName
+        };
+
+        axios.post(config.url + `users/joinapt`, { ...req })
+        .then(res => {
+            if(res.status === 201){
+                //user created
+                sessionStorage.setItem('apartmentName', this.state.existingApartmentName);
+                //redirect to homepage    
+                this.props.history.push({pathname: '/'});
+            }
+        })
+        .catch(error => {
+                this.setState({existingApartmentError: "Apartment with this name does not exist"});
+        });
     }
 
     render() {
 
         let redirect = null;
-        if(!sessionStorage.getItem('email'))
+        if(!sessionStorage.getItem('userId'))
             redirect = <Redirect to="/login" />;
-        else
-            console.log(sessionStorage.getItem('email')+redirect);
-        
+        console.log(sessionStorage.getItem('userId'));
+        console.log(sessionStorage.getItem('name'));
+        console.log(sessionStorage.getItem('apartmentName'));
         return (
             <div className={classes.Apartment}>
                 {redirect}
                 <div>
                     <p>Create new Apartment</p>
-                    <TextField id="NewApartmenNamet" multiLine={true}
+                    <TextField id="NewApartmenName" multiLine={true}
                         value={this.state.newApartmentName}
                         onChange={this.handleNewApartmentNameChange}
                         floatingLabelText="New Apartment Name"

@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import classes from './Login.css';
 import TextField from 'material-ui/TextField';
+import axios from 'axios';
+const config = require('../../Config/Config');
 
 class Login extends Component {
 
   state = {
     email: "",
     password: "",
-    emailError: null
+    emailError: null,
+    passwordError: null,
+    validationFail: <br />
   }
 
   handleEmailChange = (event, newValue) => {
@@ -20,20 +24,50 @@ class Login extends Component {
   }
 
   loginUser = () => {
-    if (this.validateEmail(this.state.email)) {
-      sessionStorage.setItem('email', this.state.email);
-      console.log("valid email");
+    let validEmail = this.validateEmail();
+    let validPassword = this.validatePassword();
+    if (validEmail && validPassword) {
+      axios.get(config.url + `users/login/` + this.state.email + "/" + this.state.password)
+        .then(res => {
+          if (res.status === 200) {
+            var user = res.data[0];
+            sessionStorage.setItem('userId', user._id);
+            sessionStorage.setItem('name', user.name);
+            if (user.apartmentName)
+              sessionStorage.setItem('apartmentName', user.apartmentName);
+            //redirect to homepage    
+            this.props.history.push({ pathname: '/' });
+          }
+        })
+        .catch(res2 => {
+          if(res2.response){
+            if(res2.response.status === 401)
+              this.setState({validationFail: (<p style={{color: 'red'}}>Validation Failed</p>)});
+          }
+        });
     }
-    else {
-      console.log("invalid email");
-      this.setState({ emailError: true });
-    }
-    console.log(this.state);
   }
 
-  validateEmail(email) {
+  validateEmail = () => {
     var re = /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|())@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+    let result = re.test(this.state.email);
+    if (!result) {
+      this.setState({ emailError: "Invalid Email" });
+      return false;
+    }
+    if (this.state.emailError)
+      this.setState({ emailError: null });
+    return true;
+  }
+
+  validatePassword = () => {
+    if (this.state.password.length === 0) {
+      this.setState({ passwordError: "Invalid Password" });
+      return false;
+    }
+    if (this.state.passwordError)
+      this.setState({ passwordError: null });
+    return true;
   }
 
   render() {
@@ -41,24 +75,22 @@ class Login extends Component {
     let credentials = null;
     if (sessionStorage.getItem("email")) {
       credentials = sessionStorage.getItem("email");
-      console.log("Email set : " + credentials);
     }
-    let errorMessage = null;
-    if (this.state.emailError)
-      errorMessage = "This Email is invalid"
 
     return (
       <div className={classes.Login} >
+        {this.state.validationFail}
         <TextField id="Email"
           hintText="Email Id"
           floatingLabelText="Email"
-          errorText={errorMessage}
+          errorText={this.state.emailError}
           value={this.state.email}
           onChange={this.handleEmailChange} />
         <TextField id="Password"
           hintText="Password Field"
           floatingLabelText="Password"
           type="password"
+          errorText={this.state.passwordError}
           value={this.state.password}
           onChange={this.handlePasswordChange} />
         <button onClick={this.loginUser}>Login</button>

@@ -74,6 +74,30 @@ router.get('/login/:emailId/:password', function (req, res, next) {
   });
 });
 
+/* GET if user email exists */
+/* Login Page: GET details of 1 user by email */
+router.get('/validateemail/:emailId', function (req, res, next) {
+  dbQuery(function (db) {
+    user.find({ email: req.params.emailId }, function (err, response) {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Server error fetching user details');
+        db.close();
+        return;
+      }
+      console.log('**User Info queried! ');
+      if (response && response != '') {
+        res.status(200);
+        res.send('true');
+      } else {
+        res.status(200);
+        res.send('false');
+      }
+      db.close();
+    });
+  });
+});
+
 /* GET ALL users in Apartment */
 router.get('/all/:aptName', function (req, res, next) {
   dbQuery(function (db) {
