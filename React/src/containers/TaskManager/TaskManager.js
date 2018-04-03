@@ -11,30 +11,13 @@ const config = require('../../Config/Config');
 class TaskManager extends Component {
 
     state = {
-        tasks: [{
-            name: "task name 1",
-            description: "this is the task name 1",
-            assignedTo: ["GSC"],
-            dateDue: null,
-            timeDue: null,
-            isRecurring: false,
-            recurringPeriod: null
-        },
-        {
-            name: "task name 2",
-            description: "this is the task name 2",
-            assignedTo: ["YMJ"],
-            dateDue: null,
-            timeDue: null,
-            isRecurring: false,
-            recurringPeriod: null
-        }],
-        users: ["GSC", "YMJ", "SH"],
+        tasks: [],
+        users: [],
         editing: false,
         taskToEdit: null,
         taskIndex: null
     }
-    
+
     componentDidMount = () => {
         let user = sessionStorage.getItem('name');
         let apartmentName = sessionStorage.getItem('apartmentName');
