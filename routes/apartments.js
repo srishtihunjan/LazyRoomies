@@ -71,6 +71,7 @@ router.get('/name/:name', function (req, res, next) {
   });
 });
 
+/* INSERT apartment AND UPDATE User with AptId */
 router.post('/', function (req, res, next) {
   dbQuery((db) => {
     apartment.create({
@@ -86,7 +87,7 @@ router.post('/', function (req, res, next) {
       user.findByIdAndUpdate(req.body.userId, { apartmentName: req.body.name }, function (err2, update_response) {
         if (err2) {
           console.log('=> Internal Server Error: ' + err2);
-          res.status(500).send("Error creating apartment");
+          res.status(500).send("Error updating user");
           db.close();
           return;
         }
