@@ -1,16 +1,18 @@
 .ApartmentInfo {
-    margin-left: 20%
+    margin: 2em 15%;
 }
 
-.Apartment {
-    color: pink;
-    font: bold;
-    font-size: large;
-}
-.User {
-    color: black
+.pageTitle {
+    font-size: 2.5em;
+    margin-bottom: 1em;
 }
 
-.CurrentUser {
-    color: red
+@font-face {
+    font-family: roomie-font;
+    src: url('../../font/Proza-Regular.otf') format("opentype");
+}
+
+.user {
+    font-size: 2em !important;
+    font-family: roomie-font !important;
 }

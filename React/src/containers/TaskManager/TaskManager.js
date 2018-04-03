@@ -158,7 +158,7 @@ class TaskManager extends Component {
         return (
             <div className={classes.TaskManager}>
                 {redirect}
-                <div>Add new task bar</div>
+                <div className={classes.pageTitle}>All Tasks</div>
                 <TaskList tasks={this.state.tasks}
                     editTask={this.editTask} />
                 <TaskDialog task={this.state.taskToEdit}

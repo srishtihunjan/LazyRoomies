@@ -90,11 +90,7 @@ class Calender extends Component {
     }
 
     transformData = () => {
-        let taskList = this.state.tasks;
         let overdueTasks = [];
-        let completedTasks = [];
-        let upcomingTasks = [];
-        let overdueTasksForUser = [];
         let completedTasksForUser = [];
         let upcomingTasksForUser = [];
 
@@ -106,9 +102,6 @@ class Calender extends Component {
             if (task.status === 'Active') {
                 let timeDue = new Date(task.timeDue);
                 if (timeDue < now) {
-                    console.log("time now : "+now);
-                    console.log("timedue : " +timeDue);
-                    console.log(timeDue < now);
                     overdueTasks.push(task);
                     if (task.assignedTo[0] === user)
                         overdueTasksForUser.push(task);
@@ -154,6 +147,7 @@ class Calender extends Component {
 
         return (
             <div className={classes.Calender}>
+                <div className={classes.pageTitle}>Coming Up</div>
                 {redirect}
                 <Toggle label="Only My Tasks" style={{ width: "30%" }} onToggle={this.onToggle} />
                 <Card>

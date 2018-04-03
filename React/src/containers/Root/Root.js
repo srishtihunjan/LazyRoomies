@@ -9,16 +9,33 @@ import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
 import classes from './Root.css';
 import shoppingListLogo from '../../icons/ShoppingCart.png';
-import calendarLogo from '../../icons/ComingUp.png';
-//import Drawer from 'material-ui/Drawer';
-//import MenuItem from 'material-ui/MenuItem';
+import taskmanagerLogo from '../../icons/AllTasks.png';
+import logoutLogo from '../../icons/Logout.png';
+import comingupLogo from '../../icons/ComingUp.png';
+import housedetailsLogo from '../../icons/HouseDetails.png';
+import feedbackLogo from '../../icons/Feedback.png';
 
 class Root extends Component {
 
     render() {
         return (
-            <div className={classes.Root}>
-                <div className={classes.sideDrawer} >
+            <div className={classes.root}>
+                <header className={classes.header}>Lazy Roomies</header>
+                <div className={classes.sideDrawer}>
+                    <div>
+                        <NavLink to="/calendar" exact activeStyle={{
+                            backgroundColor: 'rgb(0, 188, 212)'
+                        }}>
+                            <img className={classes.resizeImage} border="0" alt="Coming Up" src={comingupLogo} />
+                        </NavLink>
+                    </div>
+                    <div>
+                        <NavLink to="/" exact activeStyle={{
+                            backgroundColor: 'rgb(0, 188, 212)'
+                        }}>
+                            <img className={classes.resizeImage} border="0" alt="All Tasks" src={taskmanagerLogo} />
+                        </NavLink>
+                    </div>
                     <div>
                         <NavLink to="/shopping-list" exact activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
@@ -27,15 +44,29 @@ class Root extends Component {
                         </NavLink>
                     </div>
                     <div>
-                        <NavLink to="/" exact activeStyle={{
+                        <NavLink to="/apartment-info" exact activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }}>
-                            <img className={classes.resizeImage} border="0" alt="Task Manager" src={calendarLogo} />
+                            <img className={classes.resizeImage} border="0" alt="Apartment Info" src={housedetailsLogo} />
+                        </NavLink>
+                    </div>
+                    <div>
+                        <a href="https://ufl.qualtrics.com/jfe/form/SV_esKkgesMC8HCEx7" target="_new" activeStyle={{
+                            backgroundColor: 'rgb(0, 188, 212)'
+                        }}>
+                            <img className={classes.resizeImage} border="0" alt="Feedback" src={feedbackLogo} />
+                        </a>
+                    </div>
+                    <div>
+                        <NavLink to="/logout" exact activeStyle={{
+                            backgroundColor: 'rgb(0, 188, 212)'
+                        }}>
+                            <img className={classes.resizeImage} border="0" alt="Logout" src={logoutLogo} />
                         </NavLink>
                     </div>
                 </div>
                 <Route path='/' exact component={TaskManager} />
-                <Route path='/shopping-list' exact render={() => <ShoppingList />} />
+                <Route path='/shopping-list' exact component={ShoppingList} />
                 <Route path='/login' exact component={Login} />
                 <Route path='/signup' exact component={Signup} />
                 <Route path='/apartment' exact component={Apartment} />
