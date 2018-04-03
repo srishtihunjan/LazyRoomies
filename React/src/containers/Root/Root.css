@@ -51,7 +51,7 @@ html, body {
     background-color: gray;
 }
 
-a {
+.menulink {
     color: black;
     border: 1.2px solid black;
     line-height: 1em;
@@ -60,7 +60,7 @@ a {
     padding: 1em;
 }
 
-a:hover {
+.menulink:hover {
     background-color: lightgrey;
     color: white;
 }

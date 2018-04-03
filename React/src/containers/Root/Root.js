@@ -23,42 +23,42 @@ class Root extends Component {
                 <header className={classes.header}>Lazy Roomies</header>
                 <div className={classes.sideDrawer}>
                     <div>
-                        <NavLink to="/calendar" exact activeStyle={{
+                        <NavLink to="/calendar" className = {classes.menulink} exact activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }}>
                             <img className={classes.resizeImage} border="0" alt="Coming Up" src={comingupLogo} />
                         </NavLink>
                     </div>
                     <div>
-                        <NavLink to="/" exact activeStyle={{
+                        <NavLink to="/" exact className = {classes.menulink} activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }}>
                             <img className={classes.resizeImage} border="0" alt="All Tasks" src={taskmanagerLogo} />
                         </NavLink>
                     </div>
                     <div>
-                        <NavLink to="/shopping-list" exact activeStyle={{
+                        <NavLink to="/shopping-list" className = {classes.menulink} exact activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }}>
                             <img className={classes.resizeImage} border="0" alt="Shopping List" src={shoppingListLogo} />
                         </NavLink>
                     </div>
                     <div>
-                        <NavLink to="/apartment-info" exact activeStyle={{
+                        <NavLink to="/apartment-info" className = {classes.menulink} exact activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }}>
                             <img className={classes.resizeImage} border="0" alt="Apartment Info" src={housedetailsLogo} />
                         </NavLink>
                     </div>
                     <div>
-                        <a href="https://ufl.qualtrics.com/jfe/form/SV_esKkgesMC8HCEx7" target="_new" activeStyle={{
+                        <a className = {classes.menulink} href="https://ufl.qualtrics.com/jfe/form/SV_esKkgesMC8HCEx7" target="_new" activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }}>
                             <img className={classes.resizeImage} border="0" alt="Feedback" src={feedbackLogo} />
                         </a>
                     </div>
                     <div>
-                        <NavLink to="/logout" exact activeStyle={{
+                        <NavLink to="/logout" className = {classes.menulink} exact activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }}>
                             <img className={classes.resizeImage} border="0" alt="Logout" src={logoutLogo} />
