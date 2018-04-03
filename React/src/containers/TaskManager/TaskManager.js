@@ -70,13 +70,6 @@ class TaskManager extends Component {
 
 
     render() {
-
-        let buttonStyle = {
-            position: "fixed",
-            bottom: "50px",
-            right: "50px"
-        }
-
         let taskNames = [];
         for(let i=0; i<this.state.tasks.length;i++){
             if(this.state.tasks[i])
@@ -103,7 +96,7 @@ class TaskManager extends Component {
                     taskNames={taskNames}
                     taskIndex={this.state.taskIndex}
                 />
-                <FloatingActionButton style={buttonStyle}
+                <FloatingActionButton className={classes.floatingButton}
                 onClick={this.addNewTask}>
                     <ContentAdd />
                 </FloatingActionButton>
