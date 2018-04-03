@@ -15,7 +15,7 @@ const dbQuery = (callback) => {
 
     var db = mongoose.connection;
     db.on('error', console.error.bind(console, 'Err:Error in setting up connection'));
-    console.log('***Connected!');
+    console.log('*** Connected!');
     callback(db);
     // Not working even with mongoose.createConnection. I don't know why.
     // db.once('open', callback(db));
