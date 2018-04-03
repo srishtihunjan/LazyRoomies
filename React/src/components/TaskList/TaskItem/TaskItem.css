@@ -8,9 +8,6 @@
   }
 
   .headers {
+    padding-left: 1em;
     width: 30%;
-    margin: 10%;
-    text-align: center;
-    line-height: 75px;
-    text-align: center;
   }

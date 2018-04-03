@@ -44,6 +44,7 @@ class ShoppingList extends Component {
         
         return (
             <div className={classes.ListContainer}>
+            <div className={classes.pageTitle}>Shared Shopping List</div>
                 {redirect}
                 <ListItems listItems={this.state.list}
                     inputChangeHandler={this.inputChangeHandler}

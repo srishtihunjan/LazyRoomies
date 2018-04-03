@@ -26,6 +26,24 @@ class TaskManager extends Component {
             timeDue: null,
             isRecurring: false,
             recurringPeriod: null
+        },
+        {
+            name: "task name 3",
+            description: "this is the task name 2",
+            assignedTo: ["YMJ"],
+            dateDue: null,
+            timeDue: null,
+            isRecurring: false,
+            recurringPeriod: null
+        },
+        {
+            name: "task name 4",
+            description: "this is the task name 2",
+            assignedTo: ["YMJ"],
+            dateDue: null,
+            timeDue: null,
+            isRecurring: false,
+            recurringPeriod: null
         }],
         users: ["GSC", "YMJ", "SH"],
         editing: false,
@@ -85,7 +103,7 @@ class TaskManager extends Component {
         return (
             <div className={classes.TaskManager}>
                 {redirect}
-                <div>Add new task bar</div>
+                <div className={classes.pageTitle}>All Tasks</div>
                 <TaskList tasks={this.state.tasks}
                     editTask={this.editTask} />
                 <TaskDialog task={this.state.taskToEdit}
