@@ -74,30 +74,6 @@ router.get('/login/:emailId/:password', function (req, res, next) {
   });
 });
 
-/* GET if user email exists */
-/* Login Page: GET details of 1 user by email */
-router.get('/validateemail/:emailId', function (req, res, next) {
-  dbQuery(function (db) {
-    user.find({ email: req.params.emailId }, function (err, response) {
-      if (err) {
-        console.log(err);
-        res.status(500).send('Server error fetching user details');
-        db.close();
-        return;
-      }
-      console.log('**User Info queried! ');
-      if (response && response != '') {
-        res.status(200);
-        res.send('true');
-      } else {
-        res.status(200);
-        res.send('false');
-      }
-      db.close();
-    });
-  });
-});
-
 /* GET ALL users in Apartment */
 router.get('/all/:aptName', function (req, res, next) {
   dbQuery(function (db) {
@@ -134,20 +110,18 @@ router.post('/', function (req, res, next) {
 
   dbQuery((db) => {
     if (req.body.apartmentName) {
-      console.log('=> Inside IF AptName given');
       apartment.findOne({ name: req.body.apartmentName }, function (err, response) {
         if (err) {
-          console.log('=> Internal Server Error: ' + err);
+          console.log('=> Error finding apartment name: ' + err);
           res.status(500).send('Error finding apartment name');
           db.close();
           return;
         }
-        console.log('=> apartment search: ' + response);
         if (response && response != '') {
-          console.log('=> Inside IF Apt FOUND');
           user.create(userObj, function (err1, user_response) {
             if (err1) {
-              console.log('=> Internal Server Error: ' + err1);
+              console.log('EMAIL EXISTS err.errmsg = > ' + JSON.stringify(err1.errmg));
+              console.log('=> Error creating user: ' + err1);
               res.status(500).send('Error inserting users');
               db.close();
               return;
@@ -166,12 +140,19 @@ router.post('/', function (req, res, next) {
     } else {
       user.create(userObj, function (err, response) {
         if (err) {
-          console.log('=> Internal Server Error: ' + err);
-          res.status(500).send('Error inserting users');
+          var duplicateKeyErr = JSON.stringify(err.errmsg);
+          if (duplicateKeyErr.includes('duplicate key error collection')) {
+            console.log('***********************DUPLICATE KEY****************************');
+            res.status(401).send('Email already exists');
+            db.close();
+            return;
+          }
+          console.log('=> Error creating user: ' + err);
+          res.status(500).send('Internal_Server_Err: '+err);
           db.close();
           return;
         }
-        console.log('=> User created!');
+        console.log('=> User created!' + response);
         res.status(201);
         res.send(response);
         db.close();
