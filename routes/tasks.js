@@ -130,8 +130,8 @@ router.post('/completed', function (req, res, next) {
     console.log('=> NEW assignedToList= ' + assignedToList);
     console.log('=> req.body.isRecurring= ' + req.body.isRecurring);
     var addDays = req.body.recurringPeriod === 'Daily' ? 1 :
-      req.body.recurringPeriod === 'Weekly' ? 7 :
-        req.body.recurringPeriod === 'Monthly' ? 30 : 0;
+                  req.body.recurringPeriod === 'Weekly' ? 7 :
+                  req.body.recurringPeriod === 'Monthly' ? 30 : 0;
     var newDueDate = new Date(req.body.dateDue);
     newDueDate.setDate(newDueDate.getDate() + addDays)
     console.log('=> newDueDate = ' + newDueDate);
@@ -169,7 +169,6 @@ router.post('/completed', function (req, res, next) {
     res.sendStatus(200);
     db.close();
   }
-
 });
 
 module.exports = router;
