@@ -15,7 +15,7 @@ const CalendarItem = (props) => {
 
     let markAsCompletedButton = null;
     if(props.markTaskAsCompleted)
-        markAsCompletedButton = <button onClick={() => props.markAsCompletedButton(props.task)} >Completed</button>;
+        markAsCompletedButton = <button onClick={() => props.markTaskAsCompleted(props.task)} >Completed</button>;
     
     return (
         <Card>
@@ -31,6 +31,7 @@ const CalendarItem = (props) => {
 
                 </div>
                 <div style={{ width: "30%", display: 'inline-block' }}>Assigned To: {props.task.assignedTo.join(", ")}</div>
+                {markAsCompletedButton}
             </div>
 
 

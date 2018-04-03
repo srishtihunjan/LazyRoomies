@@ -91,12 +91,16 @@ class Calender extends Component {
 
     transformData = () => {
         let overdueTasks = [];
+        let upcomingTasks = [];
+        let completedTasks = [];
+        let overdueTasksForUser = [];
         let completedTasksForUser = [];
         let upcomingTasksForUser = [];
 
         let user = sessionStorage.getItem('name');
         let now = new Date();
 
+        let taskList = this.state.tasks;
         taskList.forEach((task) => {
             //If task is active, it can be overdue or active
             if (task.status === 'Active') {
@@ -135,6 +139,29 @@ class Calender extends Component {
     markTaskAsCompleted = (task) => {
         let tempTask = {...task};
         tempTask.status = 'Completed';
+
+        axios.post(config.url + `tasks/completed/`, tempTask)
+        .then(res => {
+            console.log("Task marked as completed");
+            let apartmentName = sessionStorage.getItem('apartmentName');
+            
+            axios.get(config.url + `tasks/` + apartmentName)
+            .then(res => {
+                console.log("tasks fetched from apartment : ");
+                if (typeof res.data === 'string')
+                    this.setState({ tasks: [] });
+                else {
+                    this.setState({ tasks: res.data }, this.transformData);
+                }
+            })
+            .catch(err => {
+                console.log(err.response);
+            });
+
+        })
+        .catch(error => {
+            console.log(error.response);
+        });
     }
 
     render() {
