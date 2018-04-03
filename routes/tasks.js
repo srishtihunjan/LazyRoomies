@@ -33,14 +33,14 @@ router.get('/:apartmentName', function (req, res, next) {
 
 /* INSERT NEW Task */
 router.post('/insert', function (req, res, next) {
-  let assignedToList = [];
+  let newAssignedToList = [];
   if (req.body.assignedTo) {
     let list = String(req.body.assignedTo).split(',');
     for (var user in list) {
-      assignedToList.push(list[user])
+      newAssignedToList.push(list[user])
     }
   }
-  console.log('=> Task assignedToList= ' + assignedToList);
+  console.log('=> Task newAssignedToList= ' + newAssignedToList);
   dbQuery((db) => {
     taskRouter.create({
       name: req.body.name,
@@ -48,7 +48,7 @@ router.post('/insert', function (req, res, next) {
       createdBy: req.body.createdBy,
       timeDue: req.body.timeDue,
       dateDue: req.body.dateDue,
-      assignedTo: assignedToList,
+      assignedTo: newAssignedToList,
       status: req.body.status,
       isRecurring: req.body.isRecurring,
       recurringPeriod: req.body.recurringPeriod,
@@ -117,58 +117,66 @@ router.post('/update', function (req, res, next) {
 
 /* UPDATE Completed Tasks */
 router.post('/completed', function (req, res, next) {
-  if (req.body.isRecurring === true) {
-    let assignedToList = [];
+
+  let taskObject = {
+    name: req.body.name,
+    description: req.body.description,
+    createdBy: req.body.createdBy,
+    timeDue: req.body.timeDue,
+    dateDue: req.body.dateDue,
+    status: req.body.status,
+    isRecurring: req.body.isRecurring,
+    recurringPeriod: req.body.recurringPeriod,
+    apartmentName: req.body.apartmentName
+  }
+
+  let assignedToList = [];
+  if (req.body.assignedTo) {
+    let list = String(req.body.assignedTo).split(',');
+    for (var user in list) {
+      assignedToList.push(list[user])
+    }
+  }
+  taskObject.assignedTo = assignedToList;
+
+  if (req.body.isRecurring === true) {    
+    var dueDate = new Date(req.body.dateDue);
+    let newAssignedToList = [];
     if (req.body.assignedTo) {
       let list = String(req.body.assignedTo).split(',');
-      console.log('=> OLD assignedToList= ' + list);
       for (var i = 1; i < list.length; i++) {
-        assignedToList.push(list[i]);
+        newAssignedToList.push(list[i]);
       }
-      assignedToList.push(list[0]);
+      newAssignedToList.push(list[0]);
     }
-    console.log('=> NEW assignedToList= ' + assignedToList);
-    console.log('=> req.body.isRecurring= ' + req.body.isRecurring);
+    taskObject.assignedTo = newAssignedToList;
+
     var addDays = req.body.recurringPeriod === 'Daily' ? 1 :
                   req.body.recurringPeriod === 'Weekly' ? 7 :
                   req.body.recurringPeriod === 'Monthly' ? 30 : 0;
-    var newDueDate = new Date(req.body.dateDue);
-    newDueDate.setDate(newDueDate.getDate() + addDays)
-    console.log('=> newDueDate = ' + newDueDate);
-    dbQuery((db) => {
-      taskRouter.findByIdAndUpdate(req.body._id, {
-        name: req.body.name,
-        description: req.body.description,
-        createdBy: req.body.createdBy,
-        timeDue: req.body.timeDue,
-        dateDue: newDueDate,
-        assignedTo: assignedToList,
-        status: req.body.status,
-        isRecurring: req.body.isRecurring,
-        recurringPeriod: req.body.recurringPeriod,
-        apartmentName: req.body.apartmentName
-      }, function (err, response) {
-        if (err) {
-          console.log('=> Internal Server Error: ' + err);
-          res.status(500).send('Error inserting task list: ' + err);
-          db.close();
-          return;
-        }
-        if (response && response != '') {
-          console.log('=> Tasks Updated! ' + response);
-          res.sendStatus(201);
-        } else {
-          console.log('=> Tasks NOT Updated!');
-          res.status(400);
-          res.send('=> Tasks NOT Updated!');
-        }
-        db.close();
-      });
-    });
-  } else {
-    res.sendStatus(200);
-    db.close();
+    dueDate.setDate(dueDate.getDate() + addDays)
+    taskObject.dateDue = dueDate;
   }
+
+  dbQuery((db) => {
+    taskRouter.findByIdAndUpdate(req.body._id, taskObject, function (err, response) {
+      if (err) {
+        console.log('=> Internal Server Error: ' + err);
+        res.status(500).send('Error inserting task list: ' + err);
+        db.close();
+        return;
+      }
+      if (response && response != '') {
+        console.log('=> Tasks Updated! ' + response);
+        res.sendStatus(201);
+      } else {
+        console.log('=> Tasks NOT Updated!');
+        res.status(400);
+        res.send('=> Tasks NOT Updated!');
+      }
+      db.close();
+    });
+  });
 });
 
 module.exports = router;
