@@ -16,12 +16,12 @@ router.get('/', function (req, res, next) {
   dbQuery(function (db) {
     user.find(function (err, response) {
       if (err) {
-        console.log(err);
+        console.log('=> Internal Server Error: ' + err);
         res.status(500).send('Server error fetching user details');
         db.close();
         return;
       }
-      console.log('**User Info queried: ' + response);
+      console.log('=> User Info queried: ' + response);
       if (response && response != '') {
         res.status(200);
         res.send(response);
@@ -38,12 +38,12 @@ router.get('/:userId', function (req, res, next) {
   dbQuery(function (db) {
     user.findById(req.params.userId, function (err, response) {
       if (err) {
-        console.log(err);
+        console.log('=> Internal Server Error: ' + err);
         res.status(500).send('Error fetching users');
         db.close();
         return;
       }
-      console.log('**Users queried!');
+      console.log('=> Users queried!');
       res.status(200);
       res.send(response);
       db.close();
@@ -56,12 +56,12 @@ router.get('/login/:emailId/:password', function (req, res, next) {
   dbQuery(function (db) {
     user.find({ email: req.params.emailId, password: req.params.password }, function (err, response) {
       if (err) {
-        console.log(err);
+        console.log('=> Internal Server Error: ' + err);
         res.status(500).send('Server error fetching user details');
         db.close();
         return;
       }
-      console.log('**User Info queried! ');
+      console.log('=> User Info queried! ');
       if (response && response != '') {
         res.status(200);
         res.send(response);
@@ -74,17 +74,41 @@ router.get('/login/:emailId/:password', function (req, res, next) {
   });
 });
 
-/* GET ALL users in Apartment */
-router.get('/all/:aptName', function (req, res, next) {
+/* GET if user email exists */
+/* Login Page: GET details of 1 user by email */
+router.get('/validateemail/:emailId', function (req, res, next) {
   dbQuery(function (db) {
-    user.find({ apartmentName: req.params.aptName }, function (err, response) {
+    user.find({ email: req.params.emailId }, function (err, response) {
       if (err) {
         console.log(err);
         res.status(500).send('Server error fetching user details');
         db.close();
         return;
       }
-      console.log('**User Info queried: ' + response);
+      console.log('**User Info queried! ');
+      if (response && response != '') {
+        res.status(200);
+        res.send('true');
+      } else {
+        res.status(200);
+        res.send('false');
+      }
+      db.close();
+    });
+  });
+});
+
+/* GET ALL users in Apartment */
+router.get('/all/:aptName', function (req, res, next) {
+  dbQuery(function (db) {
+    user.find({ apartmentName: req.params.aptName }, function (err, response) {
+      if (err) {
+        console.log('=> Internal Server Error: ' + err);
+        res.status(500).send('Server error fetching user details');
+        db.close();
+        return;
+      }
+      console.log('=> User Info queried: ' + response);
       if (response && response != '') {
         res.status(200);
         res.send(response);
@@ -113,7 +137,7 @@ router.post('/', function (req, res, next) {
       console.log('=> Inside IF AptName given');
       apartment.findOne({ name: req.body.apartmentName }, function (err, response) {
         if (err) {
-          console.log(err);
+          console.log('=> Internal Server Error: ' + err);
           res.status(500).send('Error finding apartment name');
           db.close();
           return;
@@ -123,7 +147,7 @@ router.post('/', function (req, res, next) {
           console.log('=> Inside IF Apt FOUND');
           user.create(userObj, function (err1, user_response) {
             if (err1) {
-              console.log(err1);
+              console.log('=> Internal Server Error: ' + err1);
               res.status(500).send('Error inserting users');
               db.close();
               return;
@@ -142,12 +166,12 @@ router.post('/', function (req, res, next) {
     } else {
       user.create(userObj, function (err, response) {
         if (err) {
-          console.log(err);
+          console.log('=> Internal Server Error: ' + err);
           res.status(500).send('Error inserting users');
           db.close();
           return;
         }
-        console.log('User created!');
+        console.log('=> User created!');
         res.status(201);
         res.send(response);
         db.close();
@@ -161,32 +185,31 @@ router.post('/joinapt', function (req, res, next) {
   dbQuery((db) => {
     apartment.findOne({ name: req.body.apartmentName }, function (err, response) {
       if (err) {
-        console.log(err);
+        console.log('=> Internal Server Error: ' + err);
         res.status(500).send('Error finding Apartment');
         db.close();
         return;
       }
       if (response != null && response != '') {
-        console.log('Apt created with ID = ' + response._id);
+        console.log('=> Apt created with ID = ' + response._id);
         user.findByIdAndUpdate(req.body.userId, { apartmentName: req.body.apartmentName }, function (err2, update_response) {
           if (err2) {
-            console.log('User ID not found or updated with apartmentName');
+            console.log('=> Internal Server Error: ' + err2);
             res.status(500).send('Error updating apartment information in user');
             db.close();
             return;
           }
           if (update_response) {
-            console.log('User ID found and updated with apt info!');
+            console.log('=> User ID found and updated with apt info!');
             res.sendStatus(201);
           } else {
-            console.log('User NOT updated with apt info!!');
+            console.log('=> User NOT updated with apt info!!');
             res.status(400);
             res.send('User NOT updated with apt info!!');
           }
           db.close();
         });
       } else {
-        console.log('NO REPONSE = ' + response)
         res.status(400);
         res.send('Apartment DOESNOT exist!');
         db.close();

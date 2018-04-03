@@ -15,12 +15,12 @@ router.get('/:apartmentName', function (req, res, next) {
   dbQuery((db) => {
     apartment.find({ name: req.params.apartmentName }, 'shoppingList', function (err, response) {
       if (err) {
-        console.log(err);
+        console.log('=> Internal Server Error: ' + err);
         res.status(500).send('Error fetching shopping list');
         db.close();
         return;
       }
-      console.log('**ShoppingList queried! ' + response);
+      console.log('=> ShoppingList queried! ' + response);
       res.status(200);
       res.send(response);
       db.close();
@@ -38,16 +38,16 @@ router.post('/', function (req, res, next) {
     }
     apartment.findOneAndUpdate({ name: req.body.apartmentId }, { shoppingList: shoppingList }, function (err, updateResponse) {
       if (err) {
-        console.log(err);
+        console.log('=> Internal Server Error: '+err);
         res.status(500).send('Error updating shopping list');
         db.close();
         return;
       }
       if (updateResponse && updateResponse !== '') {
-        console.log('Apartment Exists. ShoppingList inserted! ' + updateResponse);
+        console.log('=> Apartment Exists. ShoppingList inserted! ' + updateResponse);
         res.sendStatus(201);
       } else {
-        console.log('Apartment DOSENT exist. ' + updateResponse);
+        console.log('=> Apartment DOSENT exist. ' + updateResponse);
         res.status(400);
         res.send('Apartment DOESNT exist!');
       }

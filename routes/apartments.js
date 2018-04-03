@@ -16,12 +16,12 @@ router.get('/', function (req, res, next) {
   dbQuery(function (db) {
     apartment.find(function (err, response) {
       if (err) {
-        console.log(err);
+        console.log('=> Internal Server Error: ' + err);
         res.status(500).send("Error fetching apartment details");
         db.close();
         return;
       }
-      console.log('**Apartment Info queried!');
+      console.log('=> Apartment Info queried!');
       res.status(200);
       res.send(response);
       db.close();
@@ -34,17 +34,17 @@ router.get('/id/:id', function (req, res, next) {
   dbQuery(function (db) {
     apartment.findById(req.params.id, function (err, response) {
       if (err) {
-        console.log(err);
+        console.log('=> Internal Server Error: ' + err);
         res.status(500).send("Error fetching apartment details");
         db.close();
         return;
       }
       if (response != null && response != '') {
-        console.log('**Apartment Info queried!');
+        console.log('=> Apartment Info queried!');
         res.status(200);
         res.send(response);
       } else {
-        console.log('**Apartment DOES NOT EXIST!');
+        console.log('=> Apartment DOES NOT EXIST!');
         res.status(400);
         res.send('Apartment DOES NOT EXIST!');
       }
@@ -58,12 +58,12 @@ router.get('/name/:name', function (req, res, next) {
   dbQuery(function (db) {
     apartment.find({ name: req.params.name }, function (err, response) {
       if (err) {
-        console.log(err);
+        console.log('=> Internal Server Error: ' + err);
         res.status(500).send("Error fetching apartment details");
         db.close();
         return;
       }
-      console.log('**Apartment Info queried!');
+      console.log('=> Apartment Info queried!');
       res.status(200);
       res.send(response);
       db.close();
@@ -77,24 +77,24 @@ router.post('/', function (req, res, next) {
       name: req.body.name
     }, function (err1, response) {
       if (err1) {
-        console.log(err1);
+        console.log('=> Internal Server Error: ' + err1);
         res.status(500).send("Error creating apartment");
         db.close();
         return;
       }
-      console.log('Apt created with ID = ' + response._id);
+      console.log('=> Apt created with ID = ' + response._id);
       user.findByIdAndUpdate(req.body.userId, { apartmentName: req.body.name }, function (err2, update_response) {
         if (err2) {
-          console.log(err2);
+          console.log('=> Internal Server Error: ' + err2);
           res.status(500).send("Error creating apartment");
           db.close();
           return;
         }
         if (update_response && update_response != '') {
-          console.log('User ID found and updated with apt info!');
+          console.log('=> User ID found and updated with apt info!');
           res.sendStatus(201);
         } else {
-          console.log('User NOT updated with apt info!!');
+          console.log('=> User NOT updated with apt info!!');
           res.status(400);
           res.send('User NOT updated with apt info!!');
         }

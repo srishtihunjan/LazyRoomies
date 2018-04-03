@@ -55,8 +55,6 @@ var taskSchema = new Schema({
   },
   recurringPeriod: {
     type: String,
-    default: 'Weekly',
-    enum: ['Daily', 'Weekly', 'Monthly']
   },
   apartmentName: {
     type: String,

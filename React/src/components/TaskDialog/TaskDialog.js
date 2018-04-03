@@ -18,6 +18,8 @@ class TaskDialog extends Component {
         timeDue: this.props.task ? this.props.task.timeDue : null,
         isRecurring: this.props.task ? this.props.task.isRecurring : false,
         recurringPeriod: this.props.task ? this.props.task.recurringPeriod : null,
+        _id: this.props.task ? this.props.task._id : null,
+        status: this.props.task ? this.props.task.status : null,
         nameEmptyWarning: false,
         nameDuplicateWarning: false,
         assignedToWarning: false,
@@ -34,10 +36,12 @@ class TaskDialog extends Component {
                 name: nextProps.task.name,
                 description: nextProps.task.description,
                 assignedTo: nextProps.task.assignedTo,
-                dateDue: nextProps.task.dateDue,
-                timeDue: nextProps.task.timeDue,
+                dateDue: new Date(nextProps.task.dateDue),
+                timeDue: new Date(nextProps.task.timeDue),
                 isRecurring: nextProps.task.isRecurring,
                 recurringPeriod: nextProps.task.recurringPeriod,
+                _id: nextProps.task._id,
+                status: nextProps.task.status,
                 nameEmptyWarning: false,
                 nameDuplicateWarning: false,
                 assignedToWarning: false,
@@ -55,6 +59,8 @@ class TaskDialog extends Component {
                 timeDue: null,
                 isRecurring: false,
                 recurringPeriod: null,
+                status: null,
+                _id: null,
                 nameEmptyWarning: false,
                 nameDuplicateWarning: false,
                 assignedToWarning: false,
@@ -162,8 +168,13 @@ class TaskDialog extends Component {
                 dateDue: this.state.dateDue,
                 timeDue: time,
                 isRecurring: this.state.isRecurring,
-                recurringPeriod: this.state.recurringPeriod
+                recurringPeriod: this.state.recurringPeriod,
+                createdBy: sessionStorage.getItem('name'),
+                apartmentName: sessionStorage.getItem('apartmentName'),
+                status: this.state.status
             };
+            if(this.state._id)
+                newTask.taskId = this.state._id;
             this.props.saveTask(newTask);
         }
         console.log(JSON.stringify(this.state));
@@ -211,9 +222,6 @@ class TaskDialog extends Component {
                 primaryText={name}
             />
         ));
-
-        console.log(this.props);
-        console.log(this.state);
 
         return (
             <Dialog
