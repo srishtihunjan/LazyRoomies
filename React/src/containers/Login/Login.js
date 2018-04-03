@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import classes from './Login.css';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
+import RaisedButton from 'material-ui/RaisedButton';
 const config = require('../../Config/Config');
 
 class Login extends Component {
@@ -40,12 +41,16 @@ class Login extends Component {
           }
         })
         .catch(res2 => {
-          if(res2.response){
-            if(res2.response.status === 401)
-              this.setState({validationFail: (<p style={{color: 'red'}}>Validation Failed</p>)});
+          if (res2.response) {
+            if (res2.response.status === 401)
+              this.setState({ validationFail: (<p style={{ color: 'red' }}>Validation Failed</p>) });
           }
         });
     }
+  }
+
+  signup = () => {
+    window.location.href = "/signup";
   }
 
   validateEmail = () => {
@@ -72,30 +77,48 @@ class Login extends Component {
 
   render() {
 
+    const style = {
+      margin: 12,
+    };
+
     let credentials = null;
     if (sessionStorage.getItem("email")) {
       credentials = sessionStorage.getItem("email");
     }
 
     return (
+
       <div className={classes.Login} >
         {this.state.validationFail}
-        <TextField id="Email"
-          hintText="Email Id"
-          floatingLabelText="Email"
-          errorText={this.state.emailError}
-          value={this.state.email}
-          onChange={this.handleEmailChange} />
-        <TextField id="Password"
-          hintText="Password Field"
-          floatingLabelText="Password"
-          type="password"
-          errorText={this.state.passwordError}
-          value={this.state.password}
-          onChange={this.handlePasswordChange} />
-        <button onClick={this.loginUser}>Login</button>
-        <p>Don't have a login yet? <Link
-          to='/signup'>Sign Up</Link></p>
+        <div>
+          <TextField id="Email"
+            hintText="Email Id"
+            floatingLabelText="Email"
+            errorText={this.state.emailError}
+            value={this.state.email}
+            onChange={this.handleEmailChange} />
+        </div>
+
+        <div>
+          <TextField id="Password"
+            hintText="Password"
+            floatingLabelText="Password"
+            type="password"
+            errorText={this.state.passwordError}
+            value={this.state.password}
+            onChange={this.handlePasswordChange} />
+        </div>
+
+
+        <div>
+          <RaisedButton label="Login" primary={true} style={style} onClick={this.loginUser} />
+        </div>
+        
+        <div>
+          <Link id="loginLink" to='/signup'>
+            <RaisedButton label="Sign Up" secondary={true} style={style} />
+          </Link>
+        </div>
         <p>
           {credentials}
         </p>

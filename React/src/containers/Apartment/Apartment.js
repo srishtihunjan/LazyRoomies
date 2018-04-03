@@ -24,6 +24,7 @@ class Apartment extends Component {
 
     createNewApartment = () => {
         console.log("Create new apartment with name : "+this.state.newApartmentName);
+        console.log("USER ID PRINT:"+sessionStorage.getItem('userId'));
         let req = {
             userId: sessionStorage.getItem('userId'),
             name: this.state.newApartmentName
@@ -34,7 +35,7 @@ class Apartment extends Component {
             if(res.status === 201){
                 //user created
                 sessionStorage.setItem('apartmentName', this.state.newApartmentName);
-                //redirect to homepage    
+                //redirect to homepage
                 this.props.history.push({pathname: '/'});
             }
         })

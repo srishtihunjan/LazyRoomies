@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './Signup.css';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
+import RaisedButton from 'material-ui/RaisedButton';
 const config = require('../../Config/Config');
 
 class Signup extends Component {
@@ -54,21 +55,22 @@ class Signup extends Component {
 
                 axios.post(config.url + `users/`, { ...user })
                     .then(res => {
-                        if(res.status === 201){
+                        if (res.status === 201) {
                             //user created
                             let temp = JSON.parse(res.config.data);
+                            console.log("Temp object print:"+JSON.stringify(temp));
                             sessionStorage.setItem('userId', temp._id);
                             sessionStorage.setItem('name', temp.name);
-                            if(temp.apartmentName)
+                            if (temp.apartmentName)
                                 sessionStorage.setItem('apartmentName', temp.apartmentName);
-                            
+
                             //redirect to homepage    
-                            this.props.history.push({pathname: '/'});
+                            this.props.history.push({ pathname: '/' });
                         }
                     })
                     .catch(error => {
-                        if(error.status===400){
-                            this.setState({apartmentNameError: "Apartment with this name does not exist"});
+                        if (error.status === 400) {
+                            this.setState({ apartmentNameError: "Apartment with this name does not exist" });
                         }
                     });
             }
@@ -88,8 +90,8 @@ class Signup extends Component {
         let passwordValid = this.validatePassword();
 
         if (emailValid && phoneValid && nameValid && passwordValid) {
-            if(this.state.apartmentNameError)
-                this.setState({apartmentNameError: null});
+            if (this.state.apartmentNameError)
+                this.setState({ apartmentNameError: null });
             return true;
         }
         return false;
@@ -138,6 +140,10 @@ class Signup extends Component {
     }
 
     render() {
+        const style = {
+            margin: 12,
+        };
+
         let credentials = null;
         if (sessionStorage.getItem("email")) {
             credentials = sessionStorage.getItem("email");
@@ -145,41 +151,52 @@ class Signup extends Component {
 
         return (
             <div className={classes.Signup} >
-                <TextField id="Name"
-                    hintText="Name"
-                    floatingLabelText="Name"
-                    errorText={this.state.nameError}
-                    value={this.state.name}
-                    onChange={this.handleNameChange} />
-                <TextField id="Phone"
-                    hintText="Phone"
-                    floatingLabelText="Phone"
-                    errorText={this.state.phoneError}
-                    value={this.state.phone}
-                    onChange={this.handlePhoneChange} />
-                <TextField id="Email"
-                    hintText="Email Id"
-                    floatingLabelText="Email"
-                    errorText={this.state.emailError}
-                    value={this.state.email}
-                    onChange={this.handleEmailChange} />
-                <TextField id="Password"
-                    hintText="Password Field"
-                    floatingLabelText="Password"
-                    type="password"
-                    errorText={this.state.passwordError}
-                    value={this.state.password}
-                    onChange={this.handlePasswordChange} />
-                <TextField id="Apartment Name"
-                    hintText="Apartment Name - Optional"
-                    floatingLabelText="Apartment Name - Optional"
-                    errorText={this.state.apartmentNameError}
-                    value={this.state.apartmentName}
-                    onChange={this.handleApartmentNameChange} />
-                <button onClick={this.signupUser}>SignUp</button>
-                <p>
-                    {credentials}
-                </p>
+                <div>
+                    <TextField id="Name"
+                        hintText="Name"
+                        floatingLabelText="Name"
+                        errorText={this.state.nameError}
+                        value={this.state.name}
+                        onChange={this.handleNameChange} />
+                </div>
+
+                <div>
+                    <TextField id="Phone"
+                        hintText="Phone"
+                        floatingLabelText="Phone"
+                        errorText={this.state.phoneError}
+                        value={this.state.phone}
+                        onChange={this.handlePhoneChange} />
+                </div>
+
+                <div>
+                    <TextField id="Email"
+                        hintText="Email Id"
+                        floatingLabelText="Email"
+                        errorText={this.state.emailError}
+                        value={this.state.email}
+                        onChange={this.handleEmailChange} />
+                </div>
+
+                <div>
+                    <TextField id="Password"
+                        hintText="Password Field"
+                        floatingLabelText="Password"
+                        type="password"
+                        errorText={this.state.passwordError}
+                        value={this.state.password}
+                        onChange={this.handlePasswordChange} />
+                </div>
+
+                <div>
+                    <TextField id="Apartment Name"
+                        hintText="Apartment Name - Optional"
+                        floatingLabelText="Apartment Name - Optional"
+                        errorText={this.state.apartmentNameError}
+                        value={this.state.apartmentName}
+                        onChange={this.handleApartmentNameChange} />
+                </div>
+                <RaisedButton label="Sign Up" secondary={true} style={style} onClick={this.signupUser} />
             </div>);
     }
 }
