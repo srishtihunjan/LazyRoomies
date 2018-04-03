@@ -6,7 +6,8 @@ const calendarList = (props) => {
     let items = props.tasks.map( (item, index) => {
         return <CalendarItem key={item.name} 
         task={item} 
-        index={index} />;
+        index={index} 
+        markTaskAsCompleted={props.markTaskAsCompleted}/>;
     });
 
     return (items);
