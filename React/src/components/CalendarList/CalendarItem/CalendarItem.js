@@ -10,24 +10,26 @@ const CalendarItem = (props) => {
     let month = monthNames[date.getMonth()];
     let day = date.getDay();
 
-    let time=new Date(props.task.timeDue);
+    let time = new Date(props.task.timeDue);
     let timeStr = time.getHours() + ":" + time.getMinutes();
 
     return (
         <Card>
-            <div style={{ width: "10%", float: "left", backgroundColor: 'blue', color: 'white', height: "100%" }}>
-                {month}
-                <br />
-                {day}
+            <div>
+                <div style={{ width: "10%", backgroundColor: 'blue', color: 'white', display: 'inline-block' }}>
+                    {month} {day}
+                </div>
+                <div style={{ width: "10%", backgroundColor: 'BlueViolet ', color: 'white', display: 'inline-block' }}>
+                    {timeStr}
+                </div>
+                <div style={{ width: "50%", display: 'inline-block' }}>
+                    <div>{props.task.name}</div>
+
+                </div>
+                <div style={{ width: "30%", display: 'inline-block' }}>Assigned To: {props.task.assignedTo.join(", ")}</div>
             </div>
-            <div style={{ width: "10%", float: "left", backgroundColor: 'BlueViolet ', color: 'white', height: "100%" }}>
-                {timeStr}
-            </div>
-            <div style={{ width: "80%", float: "right", height: "100%" }}>
-                <div>{props.task.name}</div>
-                <div>Assigned To: {props.task.assignedTo.join(", ")}</div>
-            </div>
-            <br style={{ clear: "both" }} />
+
+
         </Card>
     );
 }

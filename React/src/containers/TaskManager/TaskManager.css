@@ -1,13 +1,17 @@
 .TaskManager {
     margin: 2em 15%;
     width: 75%;
-    /* float: right; */
 }
 
 .floatingButton {
     position: fixed;
     bottom: 75px;
     right: 90px;
+}
+
+.pageTitle{
+    font-size: 2.5em;
+    margin-bottom: 1em;
 }
 
 @media screen and (max-width: 500px) {

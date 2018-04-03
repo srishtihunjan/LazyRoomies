@@ -1,4 +1,13 @@
-.symbol{
-    display: inline-flex;
-    margin: 1em;
+.resizeImage {
+    margin-right: 20px;
+}
+
+@font-face{
+    font-family: roomie-font;
+    src: url('../../../font/Proza-Regular.otf') format("opentype");
+}
+
+.temp {
+    font-size: 1.5em !important;
+    font-family: roomie-font !important;
 }

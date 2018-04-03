@@ -13,7 +13,7 @@ class Calender extends Component {
             {
                 name: "clean room",
                 description: "I have to clean my room before mom comes home",
-                assignedTo: ["GSC","SH"],
+                assignedTo: ["GSC", "SH"],
                 dateDue: "2018-04-12T04:00:00.000Z",
                 timeDue: "2018-04-12T16:21:49.158Z",
                 isRecurring: false,
@@ -23,7 +23,7 @@ class Calender extends Component {
             {
                 name: "take out trash",
                 description: "I have to take out trash before yasho gets pissed",
-                assignedTo: ["GSC","SH"],
+                assignedTo: ["GSC", "SH"],
                 dateDue: "2018-03-10T04:00:00.000Z",
                 timeDue: "2018-03-10T16:21:49.158Z",
                 isRecurring: false,
@@ -65,63 +65,66 @@ class Calender extends Component {
 
     transformData = () => {
         let taskList = this.state.taskList;
-        let overdueTasks= [];
-        let completedTasks= [];
-        let upcomingTasks= [];
-        let overdueTasksForUser= [];
-        let completedTasksForUser= [];
-        let upcomingTasksForUser= [];
+        let overdueTasks = [];
+        let completedTasks = [];
+        let upcomingTasks = [];
+        let overdueTasksForUser = [];
+        let completedTasksForUser = [];
+        let upcomingTasksForUser = [];
 
         let user = 'GSC';
         let now = new Date();
 
-        taskList.forEach( (task) => {
+        taskList.forEach((task) => {
             //If task is active, it can be overdue or active
-            if(task.status === 'Active'){
-                let timeDue = new Date(task.timeDue);                
-                if(timeDue < now){
+            if (task.status === 'Active') {
+                let timeDue = new Date(task.timeDue);
+                if (timeDue < now) {
                     overdueTasks.push(task);
-                    if(task.assignedTo[0] === user)
+                    if (task.assignedTo[0] === user)
                         overdueTasksForUser.push(task);
                 }
-                else{
+                else {
                     upcomingTasks.push(task);
-                    if(task.assignedTo[0] === user)
+                    if (task.assignedTo[0] === user)
                         upcomingTasksForUser.push(task);
                 }
             }
-            else{
+            else {
                 completedTasks.push(task);
-                if(task.assignedTo[0] === user)
+                if (task.assignedTo[0] === user)
                     completedTasksForUser.push(task);
             }
         });
 
-        this.setState({overdueTasks: overdueTasks,
+        this.setState({
+            overdueTasks: overdueTasks,
             completedTasks: completedTasks,
             upcomingTasks: upcomingTasks,
             overdueTasksForUser: overdueTasksForUser,
             completedTasksForUser: completedTasksForUser,
-            upcomingTasksForUser: upcomingTasksForUser});
+            upcomingTasksForUser: upcomingTasksForUser
+        });
     }
 
     render() {
-        
+
         let redirect = null;
         if(!sessionStorage.getItem('userId'))
             redirect = <Redirect to="/login" />;
-        else if(!sessionStorage.getItem('apartmentName'))
+        else if (!sessionStorage.getItem('apartmentName'))
             redirect = <Redirect to="/apartment" />;
 
         return (
             <div className={classes.Calender}>
+                <div className={classes.pageTitle}>Coming Up</div>
                 {redirect}
                 <button onClick={this.transformData} >Transform data</button>
-                <Toggle label="Only My Tasks" style={{ width: "30%" }} onToggle={this.onToggle}/>
+                <Toggle label="Only My Tasks" style={{ width: "30%" }} onToggle={this.onToggle} />
                 <Card>
                     <div>Overdue Tasks</div>
                 </Card>
-                <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.overdueTasksForUser : this.state.overdueTasks } />
+                <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.overdueTasksForUser : this.state.overdueTasks} />
                 <Card>
                     <div>Upcoming Tasks</div>
                 </Card>

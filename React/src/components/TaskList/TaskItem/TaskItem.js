@@ -10,7 +10,7 @@ const taskItem = (props) => {
         <p className={classes.headers}> Assigned to: {props.task.assignedTo}</p> </div>);
 
 const style = {
-    margin: 12,
+    margin: 25
 };
     return (
         <Card>
@@ -21,7 +21,6 @@ const style = {
             />
             <CardActions>
             <RaisedButton label="Edit" primary={true} style={style}  onClick={() => props.editTask(props.task, props.index)} />
-                {/* <FlatButton label="Edit" onClick={() => props.editTask(props.task, props.index)} />  */}
             </CardActions>
             <CardText expandable={true}>
                 {props.task.description}
