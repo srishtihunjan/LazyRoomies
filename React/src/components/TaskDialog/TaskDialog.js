@@ -159,7 +159,7 @@ class TaskDialog extends Component {
 
             time.setDate(date.getDate());
             time.setMonth(date.getMonth());
-            time.setYear(date.getYear());
+            time.setYear(date.getFullYear());
 
             let newTask = {
                 name: this.state.name,

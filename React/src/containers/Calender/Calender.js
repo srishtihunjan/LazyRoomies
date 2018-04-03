@@ -4,12 +4,14 @@ import classes from './Calender.css';
 import Toggle from 'material-ui/Toggle';
 import CalendarList from '../../components/CalendarList/CalendarList';
 import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+const config = require('../../Config/Config');
 
 class Calender extends Component {
 
     state = {
         tasksOnlyForUser: false,
-        taskList: [
+        tasks: [
             {
                 name: "clean room",
                 description: "I have to clean my room before mom comes home",
@@ -59,22 +61,46 @@ class Calender extends Component {
         upcomingTasksForUser: []
     }
 
+    componentDidMount = () => {
+        let user = sessionStorage.getItem('name');
+        let apartmentName = sessionStorage.getItem('apartmentName');
+        if (!user)
+            this.props.history.replace({ pathname: '/login' });
+        if (!apartmentName)
+            this.props.history.replace({ pathname: '/apartment' });
+
+        axios.get(config.url + `tasks/` + apartmentName)
+            .then(res => {
+                console.log("tasks fetched from apartment : ");
+                if (typeof res.data === 'string')
+                    this.setState({ tasks: [] });
+                else {
+                    this.setState({ tasks: res.data }, this.transformData);
+                    console.log("transform data called");
+                    console.log(res.data);
+                }
+            })
+            .catch(err => {
+                console.log(err.response);
+            });
+    }
+
     onToggle = (event, isInputChecked) => {
         this.setState({ tasksOnlyForUser: isInputChecked });
     }
 
     transformData = () => {
-        let taskList = this.state.taskList;
         let overdueTasks = [];
-        let completedTasks = [];
         let upcomingTasks = [];
+        let completedTasks = [];
         let overdueTasksForUser = [];
         let completedTasksForUser = [];
         let upcomingTasksForUser = [];
 
-        let user = 'GSC';
+        let user = sessionStorage.getItem('name');
         let now = new Date();
 
+        let taskList = this.state.tasks;
         taskList.forEach((task) => {
             //If task is active, it can be overdue or active
             if (task.status === 'Active') {
@@ -105,12 +131,43 @@ class Calender extends Component {
             completedTasksForUser: completedTasksForUser,
             upcomingTasksForUser: upcomingTasksForUser
         });
+
+        console.log("overdue tasks : "+overdueTasks);
+        console.log("upcoming tasks : "+upcomingTasks);
+    }
+
+    markTaskAsCompleted = (task) => {
+        let tempTask = {...task};
+        tempTask.status = 'Completed';
+
+        axios.post(config.url + `tasks/completed/`, tempTask)
+        .then(res => {
+            console.log("Task marked as completed");
+            let apartmentName = sessionStorage.getItem('apartmentName');
+            
+            axios.get(config.url + `tasks/` + apartmentName)
+            .then(res => {
+                console.log("tasks fetched from apartment : ");
+                if (typeof res.data === 'string')
+                    this.setState({ tasks: [] });
+                else {
+                    this.setState({ tasks: res.data }, this.transformData);
+                }
+            })
+            .catch(err => {
+                console.log(err.response);
+            });
+
+        })
+        .catch(error => {
+            console.log(error.response);
+        });
     }
 
     render() {
 
         let redirect = null;
-        if(!sessionStorage.getItem('userId'))
+        if (!sessionStorage.getItem('userId'))
             redirect = <Redirect to="/login" />;
         else if (!sessionStorage.getItem('apartmentName'))
             redirect = <Redirect to="/apartment" />;
@@ -119,7 +176,6 @@ class Calender extends Component {
             <div className={classes.Calender}>
                 <div className={classes.pageTitle}>Coming Up</div>
                 {redirect}
-                <button onClick={this.transformData} >Transform data</button>
                 <Toggle label="Only My Tasks" style={{ width: "30%" }} onToggle={this.onToggle} />
                 <Card>
                     <div>Overdue Tasks</div>
@@ -128,7 +184,7 @@ class Calender extends Component {
                 <Card>
                     <div>Upcoming Tasks</div>
                 </Card>
-                <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.upcomingTasksForUser : this.state.upcomingTasks} />
+                <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.upcomingTasksForUser : this.state.upcomingTasks} markTaskAsCompleted={this.markTaskAsCompleted}/>
                 <Card>
                     <div>Completed Tasks</div>
                 </Card>
