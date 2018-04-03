@@ -4,6 +4,7 @@ import TaskList from '../../components/TaskList/TaskList';
 import TaskDialog from '../../components/TaskDialog/TaskDialog';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import { Redirect } from 'react-router-dom';
 
 class TaskManager extends Component {
 
@@ -75,8 +76,15 @@ class TaskManager extends Component {
             taskNames.push(this.state.tasks[i].name);
         }
 
+        let redirect = null;
+        if(!sessionStorage.getItem('email'))
+            redirect = <Redirect to="/login" />;
+        else if(!sessionStorage.getItem('apartmentName'))
+            redirect = <Redirect to="/apartment" />;
+        
         return (
             <div className={classes.TaskManager}>
+                {redirect}
                 <div>Add new task bar</div>
                 <TaskList tasks={this.state.tasks}
                     editTask={this.editTask} />

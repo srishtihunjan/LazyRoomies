@@ -73,7 +73,10 @@ class TaskDialog extends Component {
         this.setState({ description: newValue });
     }
     handleAssignedUserChange = (event, index, values) => {
-        this.setState({ assignedTo: values });
+        if(this.state.isRecurring)
+            this.setState({ assignedTo: values });
+        else
+            this.setState({ assignedTo: [values] });
     }
     handleDateDueChanged = (event, newDate) => {
         this.setState({ dateDue: newDate });
@@ -82,7 +85,10 @@ class TaskDialog extends Component {
         this.setState({ timeDue: newTime });
     }
     handleIsRecurringChange = (event, isChecked) => {
-        this.setState({ isRecurring: isChecked });
+        if(isChecked)
+            this.setState({ isRecurring: isChecked });
+        else
+            this.setState({ isRecurring: isChecked, assignedTo: []});
     }
     handleRecurringPeriodChange = (event, index, value) => {
         this.setState({ recurringPeriod: value });
@@ -141,12 +147,20 @@ class TaskDialog extends Component {
     }
     submitClicked = () => {
         if (this.validateTaskItems()) {
+
+            var date=new Date(this.state.dateDue);
+            var time=new Date(this.state.timeDue);
+
+            time.setDate(date.getDate());
+            time.setMonth(date.getMonth());
+            time.setYear(date.getYear());
+
             let newTask = {
                 name: this.state.name,
                 description: this.state.description,
                 assignedTo: this.state.assignedTo,
                 dateDue: this.state.dateDue,
-                timeDue: this.state.timeDue,
+                timeDue: time,
                 isRecurring: this.state.isRecurring,
                 recurringPeriod: this.state.recurringPeriod
             };
@@ -227,11 +241,11 @@ class TaskDialog extends Component {
                     floatingLabelFixed={true}
                     fullWidth={true} />
                 <SelectField
-                    multiple={true}
+                    multiple={this.state.isRecurring}
                     floatingLabelText="Assigned Users"
                     floatingLabelFixed={true}
                     hintText="Select Assigned Users"
-                    value={this.state.assignedTo}
+                    value={this.state.isRecurring ? this.state.assignedTo : this.state.assignedTo[0]}
                     onChange={this.handleAssignedUserChange}
                 >
                     {nameList}

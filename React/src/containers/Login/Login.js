@@ -1,63 +1,72 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import classes from './Login.css';
 import TextField from 'material-ui/TextField';
 
 class Login extends Component {
 
-  state={
+  state = {
     email: "",
-    password: ""
+    password: "",
+    emailError: null
   }
 
   handleEmailChange = (event, newValue) => {
-    this.setState({email: newValue});
+    this.setState({ email: newValue });
   }
 
   handlePasswordChange = (event, newValue) => {
-    this.setState({password: newValue});
-  }  
+    this.setState({ password: newValue });
+  }
 
   loginUser = () => {
-    if(this.validateEmail(this.state.email)){
+    if (this.validateEmail(this.state.email)) {
       sessionStorage.setItem('email', this.state.email);
       console.log("valid email");
     }
-    else{
+    else {
       console.log("invalid email");
+      this.setState({ emailError: true });
     }
     console.log(this.state);
   }
-  
+
   validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var re = /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|())@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
-  
+
   render() {
 
-    let credentials=null;
-    if(sessionStorage.getItem("email")) {
-      credentials=sessionStorage.getItem("email");
-      console.log("Email set : "+credentials);
+    let credentials = null;
+    if (sessionStorage.getItem("email")) {
+      credentials = sessionStorage.getItem("email");
+      console.log("Email set : " + credentials);
     }
+    let errorMessage = null;
+    if (this.state.emailError)
+      errorMessage = "This Email is invalid"
 
     return (
       <div className={classes.Login} >
         <TextField id="Email"
           hintText="Email Id"
-          floatingLabelText="Email" 
+          floatingLabelText="Email"
+          errorText={errorMessage}
           value={this.state.email}
-          onChange={this.handleEmailChange}/>
+          onChange={this.handleEmailChange} />
         <TextField id="Password"
           hintText="Password Field"
           floatingLabelText="Password"
-          type="password" 
+          type="password"
           value={this.state.password}
-          onChange={this.handlePasswordChange}/>
+          onChange={this.handlePasswordChange} />
         <button onClick={this.loginUser}>Login</button>
+        <p>Don't have a login yet? <Link
+          to='/signup'>Sign Up</Link></p>
         <p>
           {credentials}
-          </p>
+        </p>
       </div>
     );
   }

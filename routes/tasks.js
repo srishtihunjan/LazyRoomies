@@ -11,18 +11,18 @@ var dbQuery = require('../db_setup/db_setup');
 var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 
-/* GET users listing. */
+/* GET details of all tasks by apartmentId */
 router.get('/:apartmentId', function (req, res, next) {
     dbQuery(function (db) {
         apartment.findById(req.params.apartmentId, 'tasks', function (err, response) {
             if (err) {
                 console.log(err);
-                res.statusCode(500).send("Error fetching task details");
+                res.status(500).send("Error fetching task details");
                 db.close();
                 return;
             }
             console.log('**Task Info queried!');
-            res.statusCode(200);
+            res.status(200);
             res.send(response);
             db.close();
         });
@@ -39,7 +39,7 @@ router.post('/:apartmentId', function (req, res, next) {
         apartment.findByIdAndUpdate(req.body.apartmentId, { tasks: task_list }, function (err, update_response) {
             if (err) {
                 console.log(err);
-                res.statusCode(500).send("Error inserting task list");
+                res.status(500).send("Error inserting task list");
                 db.close();
                 return;
             }

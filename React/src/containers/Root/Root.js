@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { Route, NavLink } from 'react-router-dom';
 import TaskManager from '../TaskManager/TaskManager';
 import ShoppingList from '../ShoppingList/ShoppingList';
+import Apartment from '../Apartment/Apartment';
+import ApartmentInfo from '../ApartmentInfo/ApartmentInfo';
+import Calender from '../Calender/Calender';
 import Login from '../Login/Login';
+import Signup from '../Signup/Signup';
 import classes from './Root.css';
 import shoppingListLogo from '../../icons/ShoppingCart.png';
 import calendarLogo from '../../icons/ComingUp.png';
@@ -30,10 +34,13 @@ class Root extends Component {
                         </NavLink>
                     </div>
                 </div>
-
                 <Route path='/' exact component={TaskManager} />
                 <Route path='/shopping-list' exact render={() => <ShoppingList />} />
                 <Route path='/login' exact component={Login} />
+                <Route path='/signup' exact component={Signup} />
+                <Route path='/apartment' exact component={Apartment} />
+                <Route path='/apartment-info' exact component={ApartmentInfo} />
+                <Route path='/calendar' exact component={Calender} />
             </div>
         );
     }
