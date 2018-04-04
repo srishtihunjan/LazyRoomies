@@ -23,42 +23,42 @@ class Root extends Component {
                 <header className={classes.header}>Lazy Roomies</header>
                 <div className={classes.sideDrawer}>
                     <div>
-                        <NavLink to="/calendar" className = {classes.menulink} exact activeStyle={{
+                        <NavLink to="/" className={classes.menulink} exact activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }}>
                             <img className={classes.resizeImage} border="0" alt="Coming Up" src={comingupLogo} />
                         </NavLink>
                     </div>
                     <div>
-                        <NavLink to="/" exact className = {classes.menulink} activeStyle={{
+                        <NavLink to="/taskmanager" exact className={classes.menulink} activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }}>
                             <img className={classes.resizeImage} border="0" alt="All Tasks" src={taskmanagerLogo} />
                         </NavLink>
                     </div>
                     <div>
-                        <NavLink to="/shopping-list" className = {classes.menulink} exact activeStyle={{
+                        <NavLink to="/shopping-list" className={classes.menulink} exact activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }}>
                             <img className={classes.resizeImage} border="0" alt="Shopping List" src={shoppingListLogo} />
                         </NavLink>
                     </div>
                     <div>
-                        <NavLink to="/apartment-info" className = {classes.menulink} exact activeStyle={{
+                        <NavLink to="/apartment-info" className={classes.menulink} exact activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }}>
                             <img className={classes.resizeImage} border="0" alt="Apartment Info" src={housedetailsLogo} />
                         </NavLink>
                     </div>
                     <div>
-                        <a className = {classes.menulink} href="https://ufl.qualtrics.com/jfe/form/SV_esKkgesMC8HCEx7" target="_new" activeStyle={{
+                        <a className={classes.menulink} href="https://ufl.qualtrics.com/jfe/form/SV_esKkgesMC8HCEx7" target="_new" activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }}>
                             <img className={classes.resizeImage} border="0" alt="Feedback" src={feedbackLogo} />
                         </a>
                     </div>
                     <div>
-                        <NavLink to="/logout" className = {classes.menulink} exact activeStyle={{
+                        <NavLink to="/logout" className={classes.menulink} exact activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
                         }} onClick={() => {
                             sessionStorage.clear();
@@ -68,13 +68,13 @@ class Root extends Component {
                         </NavLink>
                     </div>
                 </div>
-                <Route path='/' exact component={TaskManager} />
+                <Route path='/' exact component={Calender} />
                 <Route path='/shopping-list' exact component={ShoppingList} />
                 <Route path='/login' exact component={Login} />
                 <Route path='/signup' exact component={Signup} />
                 <Route path='/apartment' exact component={Apartment} />
                 <Route path='/apartment-info' exact component={ApartmentInfo} />
-                <Route path='/calendar' exact component={Calender} />
+                <Route path='/taskmanager' exact component={TaskManager} />
                 <Route path="/logout" exact component={Login} />
             </div>
         );

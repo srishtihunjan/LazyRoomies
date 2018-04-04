@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './Calender.css';
 import Toggle from 'material-ui/Toggle';
 import CalendarList from '../../components/CalendarList/CalendarList';
+import Snackbar from 'material-ui/Snackbar';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 const config = require('../../Config/Config');
@@ -57,7 +58,9 @@ class Calender extends Component {
         upcomingTasks: [],
         overdueTasksForUser: [],
         completedTasksForUser: [],
-        upcomingTasksForUser: []
+        upcomingTasksForUser: [],
+        open: false,
+        message: ""
     }
 
     componentDidMount = () => {
@@ -85,7 +88,12 @@ class Calender extends Component {
     }
 
     onToggle = (event, isInputChecked) => {
+        console.log(JSON.stringify(this.state));
         this.setState({ tasksOnlyForUser: isInputChecked });
+    }
+
+    onSnackBarClose = () => {
+        this.setState({ open: false, message: "" });
     }
 
     transformData = () => {
@@ -148,9 +156,9 @@ class Calender extends Component {
                     .then(res => {
                         console.log("tasks fetched from apartment : ");
                         if (typeof res.data === 'string')
-                            this.setState({ tasks: [] });
+                            this.setState({ tasks: [], open: true, message: "Successfully Marked Task as Completed" });
                         else {
-                            this.setState({ tasks: res.data }, this.transformData);
+                            this.setState({ tasks: res.data, open: true, message: "Successfully Marked Task as Completed" }, this.transformData);
                         }
                     })
                     .catch(err => {
@@ -182,6 +190,12 @@ class Calender extends Component {
                 <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.upcomingTasksForUser : this.state.upcomingTasks} markTaskAsCompleted={this.markTaskAsCompleted} overdueStyle={{ backgroundColor: "#fff3cd" }} />
                 <div className={classes.subTitles}>Completed Tasks ({this.state.tasksOnlyForUser ? this.state.completedTasksForUser.length : this.state.completedTasks.length})</div>
                 <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.completedTasksForUser : this.state.completedTasks} overdueStyle={{ backgroundColor: "#dbf2e3" }} />
+                <Snackbar
+                    open={this.state.open}
+                    message={this.state.message}
+                    autoHideDuration={3000}
+                    onRequestClose={this.onSnackBarClose}
+                />
             </div>
         );
     }

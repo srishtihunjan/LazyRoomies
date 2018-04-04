@@ -113,7 +113,7 @@ class Login extends Component {
         <div>
           <RaisedButton label="Login" primary={true} style={style} onClick={this.loginUser} />
         </div>
-        
+
         <div>
           <Link id="loginLink" to='/signup'>
             <RaisedButton label="Sign Up" secondary={true} style={style} />
