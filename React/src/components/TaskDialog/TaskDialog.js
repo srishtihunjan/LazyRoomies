@@ -79,7 +79,7 @@ class TaskDialog extends Component {
         this.setState({ description: newValue });
     }
     handleAssignedUserChange = (event, index, values) => {
-        if(this.state.isRecurring)
+        if (this.state.isRecurring)
             this.setState({ assignedTo: values });
         else
             this.setState({ assignedTo: [values] });
@@ -91,10 +91,10 @@ class TaskDialog extends Component {
         this.setState({ timeDue: newTime });
     }
     handleIsRecurringChange = (event, isChecked) => {
-        if(isChecked)
+        if (isChecked)
             this.setState({ isRecurring: isChecked });
         else
-            this.setState({ isRecurring: isChecked, assignedTo: []});
+            this.setState({ isRecurring: isChecked, assignedTo: [] });
     }
     handleRecurringPeriodChange = (event, index, value) => {
         this.setState({ recurringPeriod: value });
@@ -131,9 +131,9 @@ class TaskDialog extends Component {
 
         if (this.state.timeDue === null)
             timeDueWarning = true;
-        
-        if(this.state.isRecurring && this.state.recurringPeriod === null)
-            recurringPeriodWarning =true;
+
+        if (this.state.isRecurring && this.state.recurringPeriod === null)
+            recurringPeriodWarning = true;
 
         console.log(" In validateTaskItems");
         console.log(!(nameEmptyWarning || nameDuplicateWarning || assignedToWarning || dateDueWarning || timeDueWarning || recurringPeriodWarning));
@@ -154,8 +154,8 @@ class TaskDialog extends Component {
     submitClicked = () => {
         if (this.validateTaskItems()) {
 
-            var date=new Date(this.state.dateDue);
-            var time=new Date(this.state.timeDue);
+            var date = new Date(this.state.dateDue);
+            var time = new Date(this.state.timeDue);
 
             time.setDate(date.getDate());
             time.setMonth(date.getMonth());
@@ -173,7 +173,7 @@ class TaskDialog extends Component {
                 apartmentName: sessionStorage.getItem('apartmentName'),
                 status: this.state.status
             };
-            if(this.state._id)
+            if (this.state._id)
                 newTask.taskId = this.state._id;
             this.props.saveTask(newTask);
         }
@@ -236,10 +236,10 @@ class TaskDialog extends Component {
                 <TextField id="TaskName" multiLine={true}
                     value={this.state.name}
                     onChange={this.handleTaskNameChange}
-                    floatingLabelText="TaskName"
+                    floatingLabelText="Task Name"
                     floatingLabelFixed={true}
-                    fullWidth={true} 
-                    errorText={this.state.nameEmptyWarning?"The Task Name cannot be Empty":(this.state.nameDuplicateWarning?"The Task cannot have same name as another task":null)}/>
+                    fullWidth={true}
+                    errorText={this.state.nameEmptyWarning ? "The Task Name cannot be Empty" : (this.state.nameDuplicateWarning ? "The Task cannot have same name as another task" : null)} />
                 <TextField id="Description" multiLine={true}
                     defaultValue={this.state.description}
                     onChange={this.handleDescriptionChange}
@@ -253,7 +253,7 @@ class TaskDialog extends Component {
                     hintText="Select Assigned Users"
                     value={this.state.isRecurring ? this.state.assignedTo : this.state.assignedTo[0]}
                     onChange={this.handleAssignedUserChange}
-                    errorText={this.state.assignedToWarning ?"The Task must have atleast one Assigned User":null}
+                    errorText={this.state.assignedToWarning ? "The Task must have atleast one Assigned User" : null}
                 >
                     {nameList}
                 </SelectField>
@@ -265,7 +265,7 @@ class TaskDialog extends Component {
                     value={this.state.dateDue}
                     onChange={this.handleDateDueChanged}
                     minDate={new Date()}
-                    errorText={this.state.dateDueWarning ?"The Due Date cannot be Empty" : null}
+                    errorText={this.state.dateDueWarning ? "The Due Date cannot be Empty" : null}
                 />
                 <TimePicker
                     floatingLabelText="Task Due Time"
@@ -274,7 +274,7 @@ class TaskDialog extends Component {
                     autoOk={true}
                     value={this.state.timeDue}
                     onChange={this.handleTimeDueChanged}
-                    errorText={this.state.timeDueWarning ?"The Time Date cannot be Empty" : null}
+                    errorText={this.state.timeDueWarning ? "The Time Date cannot be Empty" : null}
                 />
                 <Toggle
                     label="Recurring Task"
