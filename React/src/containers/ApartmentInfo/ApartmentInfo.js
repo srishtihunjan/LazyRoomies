@@ -3,6 +3,7 @@ import classes from './ApartmentInfo.css';
 import { List, ListItem } from 'material-ui/List';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ToggleStar from 'material-ui/svg-icons/toggle/star-border';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 const config = require('../../Config/Config');
 
@@ -35,6 +36,12 @@ class ApartmentInfo extends Component {
 
     render() {
 
+        let redirect = null;
+        if (!sessionStorage.getItem('userId'))
+            redirect = <Redirect to="/login" />;
+        else if (!sessionStorage.getItem('apartmentName'))
+            redirect = <Redirect to="/apartment" />;
+        
         let userList = this.state.users.map((user) => {
             console.log("user : " + user);
             console.log(user === this.state.user);
@@ -46,6 +53,7 @@ class ApartmentInfo extends Component {
         let apartmentName = sessionStorage.getItem('apartmentName');
         return (
             <div className={classes.ApartmentInfo}>
+                {redirect}
                 <div className={classes.pageTitle}>Lazy Roomies of {apartmentName}</div>
                 <List>{userList}</List>
             </div>

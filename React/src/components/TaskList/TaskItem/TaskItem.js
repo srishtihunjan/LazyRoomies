@@ -42,7 +42,7 @@ const taskItem = (props) => {
             <CardHeader children={cardHeaderChildren} />
             <CardActions>
                 <RaisedButton label="Edit" primary={true} style={style} onClick={() => props.editTask(props.task, props.index)} />
-                <RaisedButton className={classes.deleteButton} label="Delete" secondary={true} style={style} onClick={() => props.editTask(props.task, props.index)} />
+                <RaisedButton className={classes.deleteButton} label="Delete" secondary={true} style={style} onClick={() => props.deleteTask(props.task._id)} />
             </CardActions>
         </Card>
     );

@@ -60,6 +60,9 @@ class Root extends Component {
                     <div>
                         <NavLink to="/logout" className = {classes.menulink} exact activeStyle={{
                             backgroundColor: 'rgb(0, 188, 212)'
+                        }} onClick={() => {
+                            sessionStorage.clear();
+                            this.props.history.push({ pathname: '/login' });
                         }}>
                             <img className={classes.resizeImage} border="0" alt="Logout" src={logoutLogo} />
                         </NavLink>
@@ -72,6 +75,7 @@ class Root extends Component {
                 <Route path='/apartment' exact component={Apartment} />
                 <Route path='/apartment-info' exact component={ApartmentInfo} />
                 <Route path='/calendar' exact component={Calender} />
+                <Route path="/logout" exact component={Login} />
             </div>
         );
     }

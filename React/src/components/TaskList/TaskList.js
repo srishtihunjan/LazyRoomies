@@ -7,7 +7,8 @@ const taskList = (props) => {
         return <TaskItem key={item.name} 
         task={item} 
         index={index}
-        editTask = {props.editTask}/>;
+        editTask = {props.editTask}
+        deleteTask={props.deleteTask}/>;
     });
 
     return (items);
