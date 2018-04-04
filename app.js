@@ -47,16 +47,15 @@ var server = app.listen(PORT, function () {
   console.log('Listening on port ' + PORT);
 });
 
-// mongoose.connect('mongodb://localhost:27017/lazyRoomies', {
-//   useMongoClient: true,
-//   server: {
-//     reconnectTries: Number.MAX_VALUE,
-//     reconnectInterval: 1000
-//   }
-// }, function (err, db) {
-//   if (err) throw err;
-//   console.log("*********** Database connected! **********");
-// });
+mongoose.connect('mongodb://localhost:27017/lazyRoomies', {
+  server: {
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 1000
+  }
+}, function (err, db) {
+  if (err) throw err;
+  console.log("*********** Database connected! **********");
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
