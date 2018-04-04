@@ -87,7 +87,6 @@ router.post('/', function (req, res, next) {
     userObj.apartmentName = req.body.apartmentName;
   }
 
-
   if (req.body.apartmentName) {
     apartment.findOne({ name: req.body.apartmentName }, function (err, response) {
       if (err) {

@@ -3,12 +3,34 @@ import classes from './ApartmentInfo.css';
 import { List, ListItem } from 'material-ui/List';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ToggleStar from 'material-ui/svg-icons/toggle/star-border';
+import axios from 'axios';
+const config = require('../../Config/Config');
 
 class ApartmentInfo extends Component {
 
     state = {
         users: ["GSC", "YMJ", "SH"],
         user: "YMJ",
+    }
+
+    componentDidMount = () => {
+        let apartmentName = sessionStorage.getItem('apartmentName');
+
+        axios.get(config.url + `users/all/` + apartmentName)
+        .then(res => {
+            console.log("users fetched from apartment : ");
+            if (typeof res.data === 'string')
+                this.setState({ users: [] });
+            else {
+                let users = res.data.map(user => {
+                    return user.name;
+                });
+                this.setState({ users: users , user: sessionStorage.getItem('name')});
+            }
+        })
+        .catch(err => {
+            console.log(err.response);
+        });
     }
 
     render() {

@@ -11,6 +11,7 @@ const listItem = (props) => {
                 defaultValue={props.item.value}
                 onChange={props.onChange}
                 onKeyPress={props.enterPressedHandler} />
+            <button onClick={props.clearEntryHandler} >clear</button>
         </div>
     );
 }

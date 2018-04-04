@@ -42,47 +42,41 @@ class Signup extends Component {
 
     signupUser = () => {
         if (this.validateInput()) {
-            if (!this.userExists()) {
-                let user = {
-                    email: this.state.email,
-                    password: this.state.password,
-                    name: this.state.name,
-                    phone: parseInt(this.state.phone, 10)
-                };
+            let user = {
+                email: this.state.email,
+                password: this.state.password,
+                name: this.state.name,
+                phone: parseInt(this.state.phone, 10)
+            };
 
-                if (this.state.apartmentName.length > 0)
-                    user.apartmentName = this.state.apartmentName;
+            if (this.state.apartmentName.length > 0)
+                user.apartmentName = this.state.apartmentName;
 
-                axios.post(config.url + `users/`, { ...user })
-                    .then(res => {
-                        if (res.status === 201) {
-                            //user created
-                            let temp = JSON.parse(res.config.data);
-                            console.log("Temp object print:"+JSON.stringify(temp));
-                            sessionStorage.setItem('userId', temp._id);
-                            sessionStorage.setItem('name', temp.name);
-                            if (temp.apartmentName)
-                                sessionStorage.setItem('apartmentName', temp.apartmentName);
+            axios.post(config.url + `users/`, { ...user })
+                .then(res => {
+                    if (res.status === 201) {
+                        //user created
+                        let temp = res.data;
+                        sessionStorage.setItem('userId', temp._id);
+                        sessionStorage.setItem('name', temp.name);
+                        if (temp.apartmentName)
+                            sessionStorage.setItem('apartmentName', temp.apartmentName);
 
-                            //redirect to homepage    
-                            this.props.history.push({ pathname: '/' });
-                        }
-                    })
-                    .catch(error => {
-                        if (error.status === 400) {
-                            this.setState({ apartmentNameError: "Apartment with this name does not exist" });
-                        }
-                    });
-            }
+                        //redirect to homepage    
+                        this.props.history.push({ pathname: '/' });
+                    }
+                })
+                .catch(error => {
+                    if (error.response.status === 400) {
+                        this.setState({ apartmentNameError: "Apartment with this name does not exist" });
+                    }
+                    if(error.response.status === 401){
+                        this.setState({ emailError: "Email already exists"});
+                    }
+                });
         }
     }
-
-    userExists = () => {
-        axios.get(config.url + `users/validateemail/` + this.state.email)
-            .then(res => {
-                return res;
-            })
-    }
+    
     validateInput = () => {
         let emailValid = this.validateEmail();
         let phoneValid = this.validatePhone();
