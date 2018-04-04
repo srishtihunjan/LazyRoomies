@@ -120,9 +120,15 @@ router.post('/', function (req, res, next) {
         if (response && response != '') {
           user.create(userObj, function (err1, user_response) {
             if (err1) {
-              console.log('EMAIL EXISTS err.errmsg = > ' + JSON.stringify(err1.errmg));
+              var duplicateKeyErr = JSON.stringify(err1.errmsg);
+              if (duplicateKeyErr.includes('duplicate key error collection')) {
+                console.log('***********************DUPLICATE KEY****************************');
+                res.status(401).send('Email already exists');
+                db.close();
+                return;
+              }
               console.log('=> Error creating user: ' + err1);
-              res.status(500).send('Error inserting users');
+              res.status(500).send('Internal_Server_Err: ' + err1);
               db.close();
               return;
             }
@@ -148,7 +154,7 @@ router.post('/', function (req, res, next) {
             return;
           }
           console.log('=> Error creating user: ' + err);
-          res.status(500).send('Internal_Server_Err: '+err);
+          res.status(500).send('Internal_Server_Err: ' + err);
           db.close();
           return;
         }

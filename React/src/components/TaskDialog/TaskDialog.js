@@ -233,15 +233,13 @@ class TaskDialog extends Component {
                 autoScrollBodyContent={true}
             >
 
-                <label>TaskName</label>
                 <TextField id="TaskName" multiLine={true}
                     value={this.state.name}
                     onChange={this.handleTaskNameChange}
                     floatingLabelText="TaskName"
                     floatingLabelFixed={true}
-                    fullWidth={true} />
-                <p style={{display: this.state.nameEmptyWarning?"block":"none", color:'red'}}> The Task Name cannot be Empty </p>
-                <p style={{display: this.state.nameDuplicateWarning ?"block":"none", color:'red'}}> The Task cannot have same name as another task </p>
+                    fullWidth={true} 
+                    errorText={this.state.nameEmptyWarning?"The Task Name cannot be Empty":(this.state.nameDuplicateWarning?"The Task cannot have same name as another task":null)}/>
                 <TextField id="Description" multiLine={true}
                     defaultValue={this.state.description}
                     onChange={this.handleDescriptionChange}
@@ -255,10 +253,10 @@ class TaskDialog extends Component {
                     hintText="Select Assigned Users"
                     value={this.state.isRecurring ? this.state.assignedTo : this.state.assignedTo[0]}
                     onChange={this.handleAssignedUserChange}
+                    errorText={this.state.assignedToWarning ?"The Task must have atleast one Assigned User":null}
                 >
                     {nameList}
                 </SelectField>
-                <p style={{display: this.state.assignedToWarning ?"block":"none", color:'red'}}> The Task must have atleast one Assigned User </p>
                 <DatePicker
                     floatingLabelText="Task Due Date"
                     floatingLabelFixed={true}
@@ -267,8 +265,8 @@ class TaskDialog extends Component {
                     value={this.state.dateDue}
                     onChange={this.handleDateDueChanged}
                     minDate={new Date()}
+                    errorText={this.state.dateDueWarning ?"The Due Date cannot be Empty" : null}
                 />
-                <p style={{display: this.state.dateDueWarning ?"block":"none", color:'red'}}> The Due Date cannot be Empty </p>
                 <TimePicker
                     floatingLabelText="Task Due Time"
                     floatingLabelFixed={true}
@@ -276,8 +274,8 @@ class TaskDialog extends Component {
                     autoOk={true}
                     value={this.state.timeDue}
                     onChange={this.handleTimeDueChanged}
+                    errorText={this.state.timeDueWarning ?"The Time Date cannot be Empty" : null}
                 />
-                <p style={{display: this.state.timeDueWarning ?"block":"none", color:'red'}}> The Due Time cannot be Empty </p>
                 <Toggle
                     label="Recurring Task"
                     toggled={this.state.isRecurring}
@@ -289,12 +287,12 @@ class TaskDialog extends Component {
                     value={this.state.recurringPeriod}
                     onChange={this.handleRecurringPeriodChange}
                     disabled={!this.state.isRecurring}
+                    errorText={this.state.recurringPeriodWarning ? "The Recurring Period cannot be Empty" : null}
                 >
                     <MenuItem value="Daily" primaryText="Daily" />
                     <MenuItem value="Weekly" primaryText="Weekly" />
                     <MenuItem value="Monthly" primaryText="Monthly" />
                 </SelectField>
-                <p style={{display: this.state.recurringPeriodWarning ?"block":"none", color:'red'}}> The Recurring Period cannot be Empty </p>
             </Dialog>
         );
     }

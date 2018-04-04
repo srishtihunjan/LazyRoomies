@@ -36,7 +36,10 @@ router.post('/', function (req, res, next) {
     for (var item in list) {
       shoppingList.push(list[item])
     }
-    apartment.findOneAndUpdate({ name: req.body.apartmentId }, { shoppingList: shoppingList }, function (err, updateResponse) {
+    console.log("*************");
+    console.log(shoppingList);
+    console.log("*************");
+    apartment.findOneAndUpdate({ name: req.body.apartmentName }, { shoppingList: shoppingList }, function (err, updateResponse) {
       if (err) {
         console.log('=> Internal Server Error: '+err);
         res.status(500).send('Error updating shopping list');

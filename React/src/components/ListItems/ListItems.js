@@ -8,7 +8,8 @@ const listItems = (props) => {
         index={index} 
         item={item} 
         onChange={(event, newValue) => props.inputChangeHandler(event, newValue, index)}
-        enterPressedHandler={(env) => props.enterPressedHandler(env, index)} />;
+        enterPressedHandler={(env) => props.enterPressedHandler(env, index)} 
+        clearEntryHandler={() => props.clearEntryHandler(index)}/>;
     });
     console.log(items);
     return (items);

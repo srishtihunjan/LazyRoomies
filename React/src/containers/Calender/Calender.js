@@ -180,7 +180,7 @@ class Calender extends Component {
                 <Card>
                     <div>Overdue Tasks</div>
                 </Card>
-                <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.overdueTasksForUser : this.state.overdueTasks} />
+                <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.overdueTasksForUser : this.state.overdueTasks} markTaskAsCompleted={this.markTaskAsCompleted}/>
                 <Card>
                     <div>Upcoming Tasks</div>
                 </Card>
