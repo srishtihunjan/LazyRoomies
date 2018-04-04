@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './TaskManager.css';
 import TaskList from '../../components/TaskList/TaskList';
 import TaskDialog from '../../components/TaskDialog/TaskDialog';
+import TaskDeleteConfirmDialog from '../../components/TaskDeleteConfirmDialog/TaskDeleteConfirmDialog';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Snackbar from 'material-ui/Snackbar';
@@ -17,6 +18,8 @@ class TaskManager extends Component {
         editing: false,
         taskToEdit: null,
         taskIndex: null,
+        taskDeleteConfirmation: false,
+        taskToDeleteIndex: null,
         open: false,
         message: ""
     }
@@ -149,9 +152,9 @@ class TaskManager extends Component {
             .then(res => {
                 console.log("tasks fetched from apartment : ");
                 if (typeof res.data === 'string')
-                    this.setState({ tasks: [], open: true, message:"Task successfully deleted" });
+                    this.setState({ tasks: [], open: true, message:"Task successfully deleted", taskDeleteConfirmation: false, taskToDeleteIndex: null});
                 else {
-                    this.setState({ tasks: res.data, open: true, message:"Task successfully deleted" });
+                    this.setState({ tasks: res.data, open: true, message:"Task successfully deleted", taskDeleteConfirmation: false, taskToDeleteIndex: null });
                 }
             })
             .catch(err => {
@@ -161,6 +164,14 @@ class TaskManager extends Component {
         .catch(err => {
             console.log(JSON.stringify(err.response));
         })
+    }
+
+    closeTaskDeleteConfirmDialog =() => {
+        this.setState({taskDeleteConfirmation: false, taskToDeleteIndex: null});
+    }
+
+    deleteTaskClicked = (id) => {
+        this.setState({taskDeleteConfirmation: true, taskToDeleteIndex: id});
     }
 
     render() {
@@ -183,7 +194,7 @@ class TaskManager extends Component {
                 <div className={classes.pageTitle}>All Tasks</div>
                 <TaskList tasks={this.state.tasks}
                     editTask={this.editTask} 
-                    deleteTask={this.deleteTask} />
+                    deleteTask={this.deleteTaskClicked} />
                 <TaskDialog task={this.state.taskToEdit}
                     editing={this.state.editing}
                     closeTaskEditor={this.closeTaskEditor}
@@ -192,6 +203,10 @@ class TaskManager extends Component {
                     taskNames={taskNames}
                     taskIndex={this.state.taskIndex}
                 />
+                <TaskDeleteConfirmDialog deleteTask={() => this.deleteTask(this.state.taskToDeleteIndex)}
+                taskDeleteConfirmation={this.state.taskDeleteConfirmation}
+                closeTaskDeleteConfirmDialog={this.closeTaskDeleteConfirmDialog}
+                />                
                 <FloatingActionButton className={classes.floatingButton}
                     onClick={this.addNewTask}>
                     <ContentAdd />
