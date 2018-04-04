@@ -118,7 +118,8 @@ router.post('/', function (req, res, next) {
           res.status(401).send('Email already exists');
         }
         console.log('=> Error creating user: ' + err);
-        res.status(500).send('Internal_Server_Err: ' + err);
+        res.status(500);
+        res.send('Internal_Server_Err: ' + err);
       }
       console.log('=> User created!' + response);
       res.status(201);

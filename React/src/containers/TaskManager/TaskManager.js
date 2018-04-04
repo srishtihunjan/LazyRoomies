@@ -4,6 +4,7 @@ import TaskList from '../../components/TaskList/TaskList';
 import TaskDialog from '../../components/TaskDialog/TaskDialog';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import Snackbar from 'material-ui/Snackbar';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 const config = require('../../Config/Config');
@@ -15,7 +16,9 @@ class TaskManager extends Component {
         users: [],
         editing: false,
         taskToEdit: null,
-        taskIndex: null
+        taskIndex: null,
+        open: false,
+        message: ""
     }
 
     componentDidMount = () => {
@@ -90,12 +93,12 @@ class TaskManager extends Component {
                                 if (typeof res.data === 'string')
                                     this.setState({ tasks: [] });
                                 else {
-                                    this.setState({ tasks: res.data, editing: false, taskToEdit: null, taskIndex: null  });
+                                    this.setState({ tasks: res.data, editing: false, taskToEdit: null, taskIndex: null, open: true, message:"Task Saved" });
                                 }
                             })
                             .catch(err => {
                                 console.log(err.response);
-                                this.setState({ editing: false, taskToEdit: null, taskIndex: null });
+                                this.setState({ editing: false, taskToEdit: null, taskIndex: null, open: true, message:"Error in saving Task" });
                             });
                     }
                 })
@@ -103,11 +106,6 @@ class TaskManager extends Component {
                     console.log(error.response);
                 });
 
-            // let tempTasks = [...this.state.tasks];
-            // tempTasks.splice(this.state.taskIndex, 1, newTask);
-            // console.log("Old State : " + this.state.tasks);
-            // console.log("New State : " + tempTasks);
-            // this.setState({ tasks: tempTasks, editing: false, taskToEdit: null, taskIndex: null });
         }
         else {
             let tempNewTask = { ...newTask };
@@ -126,12 +124,12 @@ class TaskManager extends Component {
                                 if (typeof res.data === 'string')
                                     this.setState({ tasks: [] });
                                 else {
-                                    this.setState({ tasks: res.data, editing: false, taskToEdit: null, taskIndex: null  });
+                                    this.setState({ tasks: res.data, editing: false, taskToEdit: null, taskIndex: null, open: true, message:"Task Saved" });
                                 }
                             })
                             .catch(err => {
                                 console.log(err.response);
-                                this.setState({ editing: false, taskToEdit: null, taskIndex: null });
+                                this.setState({ editing: false, taskToEdit: null, taskIndex: null, open: true, message:"Error in saving Task" });
                             });
                     }
                 })
@@ -141,6 +139,29 @@ class TaskManager extends Component {
         }
     }
 
+    deleteTask = (id) => {
+        axios.delete(config.url + `tasks/` + id)
+        .then(res => {
+            console.log("deleted successfully");
+
+            let apartmentName = sessionStorage.getItem('apartmentName');
+            axios.get(config.url + `tasks/` + apartmentName)
+            .then(res => {
+                console.log("tasks fetched from apartment : ");
+                if (typeof res.data === 'string')
+                    this.setState({ tasks: [], open: true, message:"Task successfully deleted" });
+                else {
+                    this.setState({ tasks: res.data, open: true, message:"Task successfully deleted" });
+                }
+            })
+            .catch(err => {
+                console.log(err.response);
+            });
+        })
+        .catch(err => {
+            console.log(JSON.stringify(err.response));
+        })
+    }
 
     render() {
         let taskNames = [];
@@ -155,12 +176,14 @@ class TaskManager extends Component {
         else if (!sessionStorage.getItem('apartmentName'))
             redirect = <Redirect to="/apartment" />;
 
+            console.log("tasks : "+this.state.tasks);
         return (
             <div className={classes.TaskManager}>
                 {redirect}
                 <div className={classes.pageTitle}>All Tasks</div>
                 <TaskList tasks={this.state.tasks}
-                    editTask={this.editTask} />
+                    editTask={this.editTask} 
+                    deleteTask={this.deleteTask} />
                 <TaskDialog task={this.state.taskToEdit}
                     editing={this.state.editing}
                     closeTaskEditor={this.closeTaskEditor}
@@ -173,6 +196,11 @@ class TaskManager extends Component {
                     onClick={this.addNewTask}>
                     <ContentAdd />
                 </FloatingActionButton>
+                <Snackbar
+                    open={this.state.open}
+                    message={this.state.message}
+                    autoHideDuration={3000}
+                />
             </div>
         );
     }

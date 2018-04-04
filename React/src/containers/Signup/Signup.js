@@ -138,11 +138,6 @@ class Signup extends Component {
             margin: 12,
         };
 
-        let credentials = null;
-        if (sessionStorage.getItem("email")) {
-            credentials = sessionStorage.getItem("email");
-        }
-
         return (
             <div className={classes.Signup} >
                 <div>
