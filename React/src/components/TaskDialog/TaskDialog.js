@@ -171,7 +171,7 @@ class TaskDialog extends Component {
                 recurringPeriod: this.state.recurringPeriod,
                 createdBy: sessionStorage.getItem('name'),
                 apartmentName: sessionStorage.getItem('apartmentName'),
-                status: this.state.status
+                status: 'Active'
             };
             if(this.state._id)
                 newTask.taskId = this.state._id;
