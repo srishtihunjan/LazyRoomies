@@ -280,6 +280,7 @@ class TaskDialog extends Component {
                     label="Recurring Task"
                     toggled={this.state.isRecurring}
                     onToggle={this.handleIsRecurringChange}
+                    style={{ marginTop: "1em" }}
                 />
                 <SelectField
                     floatingLabelText="Recurring Period"
