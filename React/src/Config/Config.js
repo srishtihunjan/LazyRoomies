@@ -1,1 +1,1 @@
-module.exports= {url: "http://localhost:8000/"};
+module.exports= {url: "http://192.168.0.12:8000/"};

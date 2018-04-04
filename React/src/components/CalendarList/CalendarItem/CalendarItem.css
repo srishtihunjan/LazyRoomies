@@ -1,0 +1,23 @@
+.cardRow {
+    padding: 1em;
+}
+
+.dateField {
+    width: 8%;
+    display: inline-block;
+}
+
+.taskField {
+    width: 39%;
+    display: inline-block;
+}
+
+.assignedField {
+    width: 25%;
+    display: inline-block;
+}
+
+.completedButton {
+    width: 20%;
+    display: inline-block;
+}

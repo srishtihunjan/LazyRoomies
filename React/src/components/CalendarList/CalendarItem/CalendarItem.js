@@ -1,7 +1,14 @@
 import React from 'react';
+import classes from './CalendarItem.css';
 import { Card } from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const CalendarItem = (props) => {
+    let overdueStyle = props.overdueStyle;
+    console.log(overdueStyle);
+    const style = {
+        margin: 12,
+    };
 
     const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
@@ -14,27 +21,25 @@ const CalendarItem = (props) => {
     let timeStr = time.getHours() + ":" + time.getMinutes();
 
     let markAsCompletedButton = null;
-    if(props.markTaskAsCompleted)
-        markAsCompletedButton = <button onClick={() => props.markTaskAsCompleted(props.task)} >Completed</button>;
-    
+    if (props.markTaskAsCompleted)
+        markAsCompletedButton = <RaisedButton label="Mark As Complete" primary={true} style={style} onClick={() => props.markTaskAsCompleted(props.task)} />
+
     return (
         <Card>
-            <div>
-                <div style={{ width: "10%", backgroundColor: 'blue', color: 'white', display: 'inline-block' }}>
+            <div style={overdueStyle} className={classes.cardRow}>
+                <div className={classes.dateField}>
                     {month} {day}
                 </div>
-                <div style={{ width: "10%", backgroundColor: 'BlueViolet ', color: 'white', display: 'inline-block' }}>
+                <div className={classes.dateField}>
                     {timeStr}
                 </div>
-                <div style={{ width: "50%", display: 'inline-block' }}>
-                    <div>{props.task.name}</div>
+                <div className={classes.taskField}>
+                    <span style={{ fontWeight: "bold" }}>{props.task.name}</span>
 
                 </div>
-                <div style={{ width: "30%", display: 'inline-block' }}>Assigned To: {props.task.assignedTo.join(", ")}</div>
-                {markAsCompletedButton}
+                <div className={classes.assignedField}>Assigned To: {props.task.assignedTo.join(", ")}</div>
+                <div className={classes.completedButton}> {markAsCompletedButton}</div>
             </div>
-
-
         </Card>
     );
 }

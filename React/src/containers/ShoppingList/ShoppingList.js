@@ -46,10 +46,13 @@ class ShoppingList extends Component {
         this.setState({ list: newList });
     }
 
-    clearEntryHandler = (index) => {
+    deleteEntryHandler = (index) => {
         let oldList = this.state.list;
         let newList = [...oldList];
-        newList[index] = { key: Math.random().toString(), value: "" };
+        if (newList.length > 1)
+            newList.splice(index, 1);
+        else if (newList.length === 1)
+            newList[0] = { key: Math.random().toString(), value: "" };
         this.setState({ list: newList });
     }
 
@@ -106,9 +109,9 @@ class ShoppingList extends Component {
                 <ListItems listItems={this.state.list}
                     inputChangeHandler={this.inputChangeHandler}
                     enterPressedHandler={this.enterPressedHandler}
-                    clearEntryHandler={this.clearEntryHandler} />
+                    deleteEntryHandler={this.deleteEntryHandler} />
                 <div>
-                    <RaisedButton label="Save List" primary={true} style={style} onClick={this.saveList}/>
+                    <RaisedButton label="Save List" primary={true} style={style} onClick={this.saveList} />
                 </div>
                 <Snackbar
                     open={this.state.open}

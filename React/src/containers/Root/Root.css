@@ -14,18 +14,23 @@ html, body {
     font-size: 3em;
 }
 
-@font-face{
+@font-face {
     font-family: roomie-font;
-    src: url('../../font/Proza-Regular.otf') format("opentype");
-    /* src: url('./BebasNeueBold.otf') format("opentype"); */
+    src: url('../../font/Roboto-Bold.ttf') format("truetype");
 }
+
+@font-face {
+    font-family: header-font;
+    src: url('../../font/Billabong.ttf') format("truetype");
+}
+
 .header {
-    font-size: 3em;
+    font-size: 4em;
     text-align: center;
-    background-color: rgb(8, 74, 116);
-    /* font-family: roomie-font; */
+    background-color: #3b5998;
+    font-family: header-font;
     color: white;
-    border-bottom: 2px solid rgb(6,255,12);
+    border-bottom: 2px solid rgb(6, 255, 12);
 }
 
 .active {
