@@ -1,3 +1,14 @@
 .Apartment {
-    margin-left: 20%
+    margin-left: 15%;
+    height: 450px;
+    width: 70%;
+}
+
+.apartmentOptions {
+    margin: 6em;
+    display: inline-block;
+}
+
+.pageTitle {
+    font-size: 2em;
 }

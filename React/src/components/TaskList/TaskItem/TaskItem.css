@@ -1,13 +1,50 @@
-.Title{
-
+.headers {
+  font-size: 1em;
+  font-style: italic;
+  width: 40%;
+  display: inline-block;
 }
 
-.flexContainer {
-    display: flex;
-    flex-direction: row;
-  }
+.headers2 {
+  font-size: 1em;
+  font-style: italic;
+  float: right;
+  margin-right: 3em;
+}
 
+.taskName {
+  display: block;
+  margin-left: 0.5em;
+  font-size: 2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.taskProps {
+  display: block;
+  margin-top: 0.8em;
+  margin-left: 1.6em;
+}
+
+.deleteButton{
+  float: right;
+}
+@media screen and (max-width: 500px) {
   .headers {
-    padding-left: 1em;
-    width: 30%;
+    font-size: 1em;
+    font-style: italic;
+    width: 100%;
+    display: block;
   }
+  .headers2 {
+    font-size: 1em;
+    font-style: italic;
+    width: 100%;
+    display: block;
+    margin: 0;
+    float: none;
+  }
+  .taskProps {
+    margin-top: 0;
+  }
+}
