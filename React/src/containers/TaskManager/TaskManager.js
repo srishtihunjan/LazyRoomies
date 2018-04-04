@@ -96,12 +96,12 @@ class TaskManager extends Component {
                                 if (typeof res.data === 'string')
                                     this.setState({ tasks: [] });
                                 else {
-                                    this.setState({ tasks: res.data, editing: false, taskToEdit: null, taskIndex: null, open: true, message:"Task Saved" });
+                                    this.setState({ tasks: res.data, editing: false, taskToEdit: null, taskIndex: null, open: true, message: "Successfully Saved Task" });
                                 }
                             })
                             .catch(err => {
                                 console.log(err.response);
-                                this.setState({ editing: false, taskToEdit: null, taskIndex: null, open: true, message:"Error in saving Task" });
+                                this.setState({ editing: false, taskToEdit: null, taskIndex: null, open: true, message: "Error while saving Task" });
                             });
                     }
                 })
@@ -127,12 +127,12 @@ class TaskManager extends Component {
                                 if (typeof res.data === 'string')
                                     this.setState({ tasks: [] });
                                 else {
-                                    this.setState({ tasks: res.data, editing: false, taskToEdit: null, taskIndex: null, open: true, message:"Task Saved" });
+                                    this.setState({ tasks: res.data, editing: false, taskToEdit: null, taskIndex: null, open: true, message: "Successfully Saved Task" });
                                 }
                             })
                             .catch(err => {
                                 console.log(err.response);
-                                this.setState({ editing: false, taskToEdit: null, taskIndex: null, open: true, message:"Error in saving Task" });
+                                this.setState({ editing: false, taskToEdit: null, taskIndex: null, open: true, message: "Error while Saving Task" });
                             });
                     }
                 })
@@ -144,34 +144,38 @@ class TaskManager extends Component {
 
     deleteTask = (id) => {
         axios.delete(config.url + `tasks/` + id)
-        .then(res => {
-            console.log("deleted successfully");
-
-            let apartmentName = sessionStorage.getItem('apartmentName');
-            axios.get(config.url + `tasks/` + apartmentName)
             .then(res => {
-                console.log("tasks fetched from apartment : ");
-                if (typeof res.data === 'string')
-                    this.setState({ tasks: [], open: true, message:"Task successfully deleted", taskDeleteConfirmation: false, taskToDeleteIndex: null});
-                else {
-                    this.setState({ tasks: res.data, open: true, message:"Task successfully deleted", taskDeleteConfirmation: false, taskToDeleteIndex: null });
-                }
+                console.log("deleted successfully");
+
+                let apartmentName = sessionStorage.getItem('apartmentName');
+                axios.get(config.url + `tasks/` + apartmentName)
+                    .then(res => {
+                        console.log("tasks fetched from apartment : ");
+                        if (typeof res.data === 'string')
+                            this.setState({ tasks: [], open: true, message: "Successfully Deleted Task", taskDeleteConfirmation: false, taskToDeleteIndex: null });
+                        else {
+                            this.setState({ tasks: res.data, open: true, message: "Successfully Deleted Task", taskDeleteConfirmation: false, taskToDeleteIndex: null });
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    });
             })
             .catch(err => {
-                console.log(err.response);
-            });
-        })
-        .catch(err => {
-            console.log(JSON.stringify(err.response));
-        })
+                console.log(JSON.stringify(err.response));
+            })
     }
 
-    closeTaskDeleteConfirmDialog =() => {
-        this.setState({taskDeleteConfirmation: false, taskToDeleteIndex: null});
+    closeTaskDeleteConfirmDialog = () => {
+        this.setState({ taskDeleteConfirmation: false, taskToDeleteIndex: null });
     }
 
     deleteTaskClicked = (id) => {
-        this.setState({taskDeleteConfirmation: true, taskToDeleteIndex: id});
+        this.setState({ taskDeleteConfirmation: true, taskToDeleteIndex: id });
+    }
+
+    onSnackBarClose = () => {
+        this.setState({ open: false, message: "" });
     }
 
     render() {
@@ -187,13 +191,13 @@ class TaskManager extends Component {
         else if (!sessionStorage.getItem('apartmentName'))
             redirect = <Redirect to="/apartment" />;
 
-            console.log("tasks : "+this.state.tasks);
+        console.log("tasks : " + this.state.tasks);
         return (
             <div className={classes.TaskManager}>
                 {redirect}
                 <div className={classes.pageTitle}>All Tasks</div>
                 <TaskList tasks={this.state.tasks}
-                    editTask={this.editTask} 
+                    editTask={this.editTask}
                     deleteTask={this.deleteTaskClicked} />
                 <TaskDialog task={this.state.taskToEdit}
                     editing={this.state.editing}
@@ -204,9 +208,9 @@ class TaskManager extends Component {
                     taskIndex={this.state.taskIndex}
                 />
                 <TaskDeleteConfirmDialog deleteTask={() => this.deleteTask(this.state.taskToDeleteIndex)}
-                taskDeleteConfirmation={this.state.taskDeleteConfirmation}
-                closeTaskDeleteConfirmDialog={this.closeTaskDeleteConfirmDialog}
-                />                
+                    taskDeleteConfirmation={this.state.taskDeleteConfirmation}
+                    closeTaskDeleteConfirmDialog={this.closeTaskDeleteConfirmDialog}
+                />
                 <FloatingActionButton className={classes.floatingButton}
                     onClick={this.addNewTask}>
                     <ContentAdd />
@@ -215,6 +219,7 @@ class TaskManager extends Component {
                     open={this.state.open}
                     message={this.state.message}
                     autoHideDuration={3000}
+                    onRequestClose={this.onSnackBarClose}
                 />
             </div>
         );

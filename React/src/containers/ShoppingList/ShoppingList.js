@@ -80,13 +80,17 @@ class ShoppingList extends Component {
 
         axios.post(config.url + `shoppinglist/`, { ...req })
             .then(res => {
-                console.log("Shopping List successfully saved");
-                this.setState({ open: true, message: "Shopping List successfully saved" });
+                console.log("Successfully Saved Shopping List");
+                this.setState({ open: true, message: "Successfully Saved Shopping List" });
             })
             .catch(err => {
                 console.log("Error saving Shopping List");
-                this.setState({ open: true, message: "Error saving Shopping List" });
+                this.setState({ open: true, message: "Error while saving Shopping List" });
             });
+    }
+
+    onSnackBarClose = () => {
+        this.setState({ open: false, message: "" });
     }
 
     render() {
@@ -117,6 +121,7 @@ class ShoppingList extends Component {
                     open={this.state.open}
                     message={this.state.message}
                     autoHideDuration={3000}
+                    onRequestClose={this.onSnackBarClose}
                 />
             </div>
         );
