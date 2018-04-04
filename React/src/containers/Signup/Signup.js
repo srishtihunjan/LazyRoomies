@@ -165,7 +165,7 @@ class Signup extends Component {
 
                 <div>
                     <TextField id="Email"
-                        hintText="Email Id"
+                        hintText="Email"
                         floatingLabelText="Email"
                         errorText={this.state.emailError}
                         value={this.state.email}
@@ -174,7 +174,7 @@ class Signup extends Component {
 
                 <div>
                     <TextField id="Password"
-                        hintText="Password Field"
+                        hintText="Password"
                         floatingLabelText="Password"
                         type="password"
                         errorText={this.state.passwordError}
@@ -184,8 +184,8 @@ class Signup extends Component {
 
                 <div>
                     <TextField id="Apartment Name"
-                        hintText="Apartment Name - Optional"
-                        floatingLabelText="Apartment Name - Optional"
+                        hintText="Enter Apartment Name"
+                        floatingLabelText="Join Existing Apartment (Optional)"
                         errorText={this.state.apartmentNameError}
                         value={this.state.apartmentName}
                         onChange={this.handleApartmentNameChange} />
