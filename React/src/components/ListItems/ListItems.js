@@ -9,7 +9,7 @@ const listItems = (props) => {
         item={item} 
         onChange={(event, newValue) => props.inputChangeHandler(event, newValue, index)}
         enterPressedHandler={(env) => props.enterPressedHandler(env, index)} 
-        clearEntryHandler={() => props.clearEntryHandler(index)}/>;
+        deleteEntryHandler={() => props.deleteEntryHandler(index)}/>;
     });
     console.log(items);
     return (items);

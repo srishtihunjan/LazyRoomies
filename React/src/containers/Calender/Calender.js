@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Card } from 'material-ui/Card';
 import classes from './Calender.css';
 import Toggle from 'material-ui/Toggle';
 import CalendarList from '../../components/CalendarList/CalendarList';
@@ -132,36 +131,36 @@ class Calender extends Component {
             upcomingTasksForUser: upcomingTasksForUser
         });
 
-        console.log("overdue tasks : "+overdueTasks);
-        console.log("upcoming tasks : "+upcomingTasks);
+        console.log("overdue tasks : " + overdueTasks);
+        console.log("upcoming tasks : " + upcomingTasks);
     }
 
     markTaskAsCompleted = (task) => {
-        let tempTask = {...task};
+        let tempTask = { ...task };
         tempTask.status = 'Completed';
 
         axios.post(config.url + `tasks/completed/`, tempTask)
-        .then(res => {
-            console.log("Task marked as completed");
-            let apartmentName = sessionStorage.getItem('apartmentName');
-            
-            axios.get(config.url + `tasks/` + apartmentName)
             .then(res => {
-                console.log("tasks fetched from apartment : ");
-                if (typeof res.data === 'string')
-                    this.setState({ tasks: [] });
-                else {
-                    this.setState({ tasks: res.data }, this.transformData);
-                }
-            })
-            .catch(err => {
-                console.log(err.response);
-            });
+                console.log("Task marked as completed");
+                let apartmentName = sessionStorage.getItem('apartmentName');
 
-        })
-        .catch(error => {
-            console.log(error.response);
-        });
+                axios.get(config.url + `tasks/` + apartmentName)
+                    .then(res => {
+                        console.log("tasks fetched from apartment : ");
+                        if (typeof res.data === 'string')
+                            this.setState({ tasks: [] });
+                        else {
+                            this.setState({ tasks: res.data }, this.transformData);
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    });
+
+            })
+            .catch(error => {
+                console.log(error.response);
+            });
     }
 
     render() {
@@ -176,19 +175,13 @@ class Calender extends Component {
             <div className={classes.Calender}>
                 <div className={classes.pageTitle}>Coming Up</div>
                 {redirect}
-                <Toggle label="Only My Tasks" style={{ width: "30%" }} onToggle={this.onToggle} />
-                <Card>
-                    <div>Overdue Tasks</div>
-                </Card>
-                <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.overdueTasksForUser : this.state.overdueTasks} markTaskAsCompleted={this.markTaskAsCompleted}/>
-                <Card>
-                    <div>Upcoming Tasks</div>
-                </Card>
-                <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.upcomingTasksForUser : this.state.upcomingTasks} markTaskAsCompleted={this.markTaskAsCompleted}/>
-                <Card>
-                    <div>Completed Tasks</div>
-                </Card>
-                <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.completedTasksForUser : this.state.completedTasks} />
+                <Toggle label="Only My Tasks" style={{ float: "right", width: "15%" }} onToggle={this.onToggle} />
+                <div className={classes.subTitles}>Overdue Tasks ({this.state.tasksOnlyForUser ? this.state.overdueTasksForUser.length : this.state.overdueTasks.length})</div>
+                <CalendarList style={{ backgroundColor: "red" }} tasks={this.state.tasksOnlyForUser ? this.state.overdueTasksForUser : this.state.overdueTasks} markTaskAsCompleted={this.markTaskAsCompleted} overdueStyle={{ backgroundColor: "#fee2e1" }} />
+                <div className={classes.subTitles}>Upcoming Tasks ({this.state.tasksOnlyForUser ? this.state.upcomingTasksForUser.length : this.state.upcomingTasks.length})</div>
+                <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.upcomingTasksForUser : this.state.upcomingTasks} markTaskAsCompleted={this.markTaskAsCompleted} overdueStyle={{ backgroundColor: "#fff3cd" }} />
+                <div className={classes.subTitles}>Completed Tasks ({this.state.tasksOnlyForUser ? this.state.completedTasksForUser.length : this.state.completedTasks.length})</div>
+                <CalendarList tasks={this.state.tasksOnlyForUser ? this.state.completedTasksForUser : this.state.completedTasks} overdueStyle={{ backgroundColor: "#dbf2e3" }} />
             </div>
         );
     }
