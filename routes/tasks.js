@@ -139,7 +139,7 @@ router.post('/completed', function (req, res, next) {
   }
   taskObject.assignedTo = assignedToList;
 
-  if (req.body.isRecurring === true) {    
+  if (req.body.isRecurring === true) {
     var dueDate = new Date(req.body.dateDue);
     let newAssignedToList = [];
     if (req.body.assignedTo) {
@@ -173,6 +173,29 @@ router.post('/completed', function (req, res, next) {
         console.log('=> Tasks NOT Updated!');
         res.status(400);
         res.send('=> Tasks NOT Updated!');
+      }
+      db.close();
+    });
+  });
+});
+
+/* DELETE a task by ID */
+router.delete('/:id', function (req, res, next) {
+  dbQuery((db) => {
+    taskRouter.findByIdAndRemove(req.params.id, function (err, response) {
+      if (err) {
+        console.log('=> ServerErr: Task Deletion => ' + err);
+        res.status(500).send('Error deleting task: ' + err);
+        db.close();
+        return;
+      }
+      if (response && response != '') {
+        console.log('=> Task DELETED! ' + response);
+        res.sendStatus(200);
+      } else {
+        console.log('=> Task NOT Deleted!');
+        res.status(400);
+        res.send('Task NOT Deleted!');
       }
       db.close();
     });

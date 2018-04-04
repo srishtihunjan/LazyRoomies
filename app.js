@@ -9,6 +9,7 @@ var tasksRouter = require('./routes/tasks');
 var shoppinglistRouter = require('./routes/shoppinglist');
 var apartmentRouter = require('./routes/apartments');
 var usersRouter = require('./routes/users');
+var mongoose = require('mongoose');
 
 const PORT = 8000;
 
@@ -30,9 +31,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 // app.use('/users', users);
 app.use('/tasks', tasksRouter);
-app.use('/shoppinglist',shoppinglistRouter);
-app.use('/apartments',apartmentRouter);
-app.use('/users',usersRouter);
+app.use('/shoppinglist', shoppinglistRouter);
+app.use('/apartments', apartmentRouter);
+app.use('/users', usersRouter);
 
 
 app.all('*', function (req, res, next) {
@@ -43,18 +44,29 @@ app.all('*', function (req, res, next) {
 });
 
 var server = app.listen(PORT, function () {
-	console.log('Listening on port ' + PORT);
+  console.log('Listening on port ' + PORT);
 });
 
+// mongoose.connect('mongodb://localhost:27017/lazyRoomies', {
+//   useMongoClient: true,
+//   server: {
+//     reconnectTries: Number.MAX_VALUE,
+//     reconnectInterval: 1000
+//   }
+// }, function (err, db) {
+//   if (err) throw err;
+//   console.log("*********** Database connected! **********");
+// });
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
