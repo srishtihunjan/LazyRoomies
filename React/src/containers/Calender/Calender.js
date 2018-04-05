@@ -174,7 +174,7 @@ class Calender extends Component {
     render() {
 
         const toggleStyle =
-            window.screen.availWidth < 780 ? { marginTop: "2em", width: "60%" } : { float: "right", width: "15%" };
+            window.screen.availWidth < 780 ? { marginTop: "1em", width: "60%" } : { float: "right", width: "15%" };
         console.log(window.screen.availWidth);
         let redirect = null;
         if (!sessionStorage.getItem('userId'))
