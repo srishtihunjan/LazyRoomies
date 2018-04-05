@@ -173,6 +173,9 @@ class Calender extends Component {
 
     render() {
 
+        const toggleStyle =
+            window.screen.availWidth < 780 ? { marginTop: "2em", width: "60%" } : { float: "right", width: "15%" };
+        console.log(window.screen.availWidth);
         let redirect = null;
         if (!sessionStorage.getItem('userId'))
             redirect = <Redirect to="/login" />;
@@ -183,7 +186,7 @@ class Calender extends Component {
             <div className={classes.Calender}>
                 <div className={classes.pageTitle}>Coming Up</div>
                 {redirect}
-                <Toggle label="Only My Tasks" style={{ float: "right", width: "15%" }} onToggle={this.onToggle} />
+                <Toggle label="Only My Tasks" style={toggleStyle} onToggle={this.onToggle} />
                 <div className={classes.subTitles}>Overdue Tasks ({this.state.tasksOnlyForUser ? this.state.overdueTasksForUser.length : this.state.overdueTasks.length})</div>
                 <CalendarList style={{ backgroundColor: "red" }} tasks={this.state.tasksOnlyForUser ? this.state.overdueTasksForUser : this.state.overdueTasks} markTaskAsCompleted={this.markTaskAsCompleted} overdueStyle={{ backgroundColor: "#fee2e1" }} />
                 <div className={classes.subTitles}>Upcoming Tasks ({this.state.tasksOnlyForUser ? this.state.upcomingTasksForUser.length : this.state.upcomingTasks.length})</div>
