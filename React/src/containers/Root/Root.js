@@ -68,14 +68,14 @@ class Root extends Component {
                         </NavLink>
                     </div>
                 </div>
-                <Route path='/' exact component={Calender} />
-                <Route path='/shopping-list' exact component={ShoppingList} />
-                <Route path='/login' exact component={Login} />
-                <Route path='/signup' exact component={Signup} />
-                <Route path='/apartment' exact component={Apartment} />
-                <Route path='/apartment-info' exact component={ApartmentInfo} />
-                <Route path='/taskmanager' exact component={TaskManager} />
-                <Route path="/logout" exact component={Login} />
+                    <Route path='/' exact component={Calender} />
+                    <Route path='/shopping-list' exact component={ShoppingList} />
+                    <Route path='/login' exact component={Login} />
+                    <Route path='/signup' exact component={Signup} />
+                    <Route path='/apartment' exact component={Apartment} />
+                    <Route path='/apartment-info' exact component={ApartmentInfo} />
+                    <Route path='/taskmanager' exact component={TaskManager} />
+                    <Route path="/logout" exact component={Login} />
             </div>
         );
     }

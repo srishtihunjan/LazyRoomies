@@ -11,3 +11,9 @@
     font-size: 1.5em !important;
     font-family: roomie-font !important;
 }
+
+@media screen and (max-width: 500px) {
+    .resizeImage {
+        margin-right: 7px;
+    }
+}

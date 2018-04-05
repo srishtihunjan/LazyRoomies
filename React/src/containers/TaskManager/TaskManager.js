@@ -193,34 +193,39 @@ class TaskManager extends Component {
 
         console.log("tasks : " + this.state.tasks);
         return (
-            <div className={classes.TaskManager}>
-                {redirect}
-                <div className={classes.pageTitle}>All Tasks</div>
-                <TaskList tasks={this.state.tasks}
-                    editTask={this.editTask}
-                    deleteTask={this.deleteTaskClicked} />
-                <TaskDialog task={this.state.taskToEdit}
-                    editing={this.state.editing}
-                    closeTaskEditor={this.closeTaskEditor}
-                    saveTask={this.saveTask}
-                    users={this.state.users}
-                    taskNames={taskNames}
-                    taskIndex={this.state.taskIndex}
-                />
-                <TaskDeleteConfirmDialog deleteTask={() => this.deleteTask(this.state.taskToDeleteIndex)}
-                    taskDeleteConfirmation={this.state.taskDeleteConfirmation}
-                    closeTaskDeleteConfirmDialog={this.closeTaskDeleteConfirmDialog}
-                />
-                <FloatingActionButton className={classes.floatingButton}
-                    onClick={this.addNewTask}>
-                    <ContentAdd />
-                </FloatingActionButton>
-                <Snackbar
-                    open={this.state.open}
-                    message={this.state.message}
-                    autoHideDuration={3000}
-                    onRequestClose={this.onSnackBarClose}
-                />
+            <div>
+                <div className={classes.TaskManager}>
+                    {redirect}
+                    <div className={classes.pageTitle}>All Tasks</div>
+                    <TaskList tasks={this.state.tasks}
+                        editTask={this.editTask}
+                        deleteTask={this.deleteTaskClicked} />
+                    <TaskDialog task={this.state.taskToEdit}
+                        editing={this.state.editing}
+                        closeTaskEditor={this.closeTaskEditor}
+                        saveTask={this.saveTask}
+                        users={this.state.users}
+                        taskNames={taskNames}
+                        taskIndex={this.state.taskIndex}
+                    />
+                    <TaskDeleteConfirmDialog deleteTask={() => this.deleteTask(this.state.taskToDeleteIndex)}
+                        taskDeleteConfirmation={this.state.taskDeleteConfirmation}
+                        closeTaskDeleteConfirmDialog={this.closeTaskDeleteConfirmDialog}
+                    />
+
+                    <Snackbar
+                        open={this.state.open}
+                        message={this.state.message}
+                        autoHideDuration={3000}
+                        onRequestClose={this.onSnackBarClose}
+                    />
+                </div>
+                <div>
+                    <FloatingActionButton className={classes.floatingButton}
+                        onClick={this.addNewTask}>
+                        <ContentAdd />
+                    </FloatingActionButton>
+                </div>
             </div>
         );
     }

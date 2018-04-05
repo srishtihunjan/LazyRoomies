@@ -33,6 +33,8 @@ class Apartment extends Component {
 
         axios.post(config.url + `apartments/`, { ...req })
             .then(res => {
+                console.log("Res:" + JSON.stringify(res));
+                console.log("State:" + JSON.stringify(this.state));
                 if (res.status === 201) {
                     //user created
                     sessionStorage.setItem('apartmentName', this.state.newApartmentName);
@@ -55,6 +57,8 @@ class Apartment extends Component {
 
         axios.post(config.url + `users/joinapt`, { ...req })
             .then(res => {
+                console.log("Join APT Res:" + JSON.stringify(res));
+                console.log("JOIN APT State:" + JSON.stringify(this.state));
                 if (res.status === 201) {
                     //user created
                     sessionStorage.setItem('apartmentName', this.state.existingApartmentName);
@@ -70,7 +74,7 @@ class Apartment extends Component {
     render() {
         const style = {
             margin: 12,
-           
+
         };
         let redirect = null;
         if (!sessionStorage.getItem('userId'))
@@ -92,7 +96,7 @@ class Apartment extends Component {
                             errorText={this.state.newApartmentError} />
                     </div>
                     <div>
-                        <RaisedButton label="Create Apartment" labelStyle={{fontSize:'1.2em'}} primary={true} style={style} onClick={this.createNewApartment} />
+                        <RaisedButton label="Create Apartment" labelStyle={{ fontSize: '1.2em' }} primary={true} style={style} onClick={this.createNewApartment} />
                     </div>
                 </div>
                 <div className={classes.apartmentOptions}>
@@ -106,7 +110,7 @@ class Apartment extends Component {
                             errorText={this.state.existingApartmentError} />
                     </div>
                     <div>
-                        <RaisedButton label="Join Apartment" labelStyle={{fontSize:'1.2em'}} secondary={true} style={style} onClick={this.joinExistingApartment} />
+                        <RaisedButton label="Join Apartment" labelStyle={{ fontSize: '1.2em' }} secondary={true} style={style} onClick={this.joinExistingApartment} />
                     </div>
                 </div>
             </div>

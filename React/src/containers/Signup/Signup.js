@@ -70,13 +70,13 @@ class Signup extends Component {
                     if (error.response.status === 400) {
                         this.setState({ apartmentNameError: "Apartment with this name does not exist" });
                     }
-                    if(error.response.status === 401){
-                        this.setState({ emailError: "Email already exists"});
+                    if (error.response.status === 401) {
+                        this.setState({ emailError: "Email already exists" });
                     }
                 });
         }
     }
-    
+
     validateInput = () => {
         let emailValid = this.validateEmail();
         let phoneValid = this.validatePhone();
@@ -175,15 +175,6 @@ class Signup extends Component {
                         errorText={this.state.passwordError}
                         value={this.state.password}
                         onChange={this.handlePasswordChange} />
-                </div>
-
-                <div>
-                    <TextField id="Apartment Name"
-                        hintText="Enter Apartment Name"
-                        floatingLabelText="Join Existing Apartment (Optional)"
-                        errorText={this.state.apartmentNameError}
-                        value={this.state.apartmentName}
-                        onChange={this.handleApartmentNameChange} />
                 </div>
                 <RaisedButton label="Sign Up" secondary={true} style={style} onClick={this.signupUser} />
             </div>);

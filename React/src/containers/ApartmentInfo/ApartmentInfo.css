@@ -16,3 +16,13 @@
     font-size: 2em !important;
     font-family: roomie-font !important;
 }
+
+@media screen and (max-width: 500px) {
+    .pageTitle {
+        margin-bottom: 0;
+    }
+    .ApartmentInfo {
+        margin: 0 10% 0 20%;
+        width: inherit;
+    }
+}
