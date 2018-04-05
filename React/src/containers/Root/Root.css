@@ -1,3 +1,13 @@
+@font-face {
+    font-family: roomie-font;
+    src: url('../../font/Roboto-Bold.ttf') format("truetype");
+}
+
+@font-face {
+    font-family: header-font;
+    src: url('../../font/Billabong.ttf') format("truetype");
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -12,16 +22,6 @@ html, body {
 
 .pageTitle {
     font-size: 3em;
-}
-
-@font-face {
-    font-family: roomie-font;
-    src: url('../../font/Roboto-Bold.ttf') format("truetype");
-}
-
-@font-face {
-    font-family: header-font;
-    src: url('../../font/Billabong.ttf') format("truetype");
 }
 
 .header {
@@ -76,9 +76,20 @@ html, body {
 }
 
 @media screen and (max-width: 500px) {
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: rgb(241, 251, 255);
+        font-family: roomie-font;
+    }
     .sideDrawer {
-        width: 10% !important;
+        width: 14% !important;
         float: left;
+        top: 9em;
+        position: sticky;
+        z-index: 30;
+        background-color: white;
     }
     .resizeImage {
         height: 25px;

@@ -37,7 +37,7 @@ const CalendarItem = (props) => {
                     <span style={{ fontWeight: "bold" }}>{props.task.name}</span>
 
                 </div>
-                <div className={classes.assignedField}>Assigned To: {props.task.assignedTo.join(", ")}</div>
+                <div className={classes.assignedField}>Assigned To: {props.task.assignedTo[0]}</div>
                 <div className={classes.completedButton}> {markAsCompletedButton}</div>
             </div>
         </Card>

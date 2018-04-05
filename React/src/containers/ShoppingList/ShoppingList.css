@@ -1,9 +1,21 @@
 .ListContainer {
+    /* margin: 2em 25%;
+    width: 50%; */
     margin: 2em auto;
     width: 400px;
 }
 
-.pageTitle{
+.pageTitle {
     font-size: 2.5em;
     margin-bottom: 1em;
+}
+
+@media screen and (max-width: 500px) {
+    .pageTitle {
+        margin-bottom: 0;
+    }
+    .ListContainer {
+        margin: 0 10% 0 20%;
+        width: inherit;
+    }
 }

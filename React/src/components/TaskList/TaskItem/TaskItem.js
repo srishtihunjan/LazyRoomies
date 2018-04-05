@@ -10,6 +10,8 @@ const taskItem = (props) => {
     }
     let date = new Date(props.task.dateDue);
     let time = new Date(props.task.timeDue);
+    let assignedTo = (props.task.assignedTo).join(", ");
+
     const cardHeaderChildren = (
         <div>
             <div className={classes.taskName}>
@@ -25,7 +27,7 @@ const taskItem = (props) => {
                     Status: {props.task.status}
                 </div>
                 <div className={classes.headers2}>
-                    Assigned to: {props.task.assignedTo}
+                    Assigned to: {assignedTo}
                 </div>
             </div>
             <div className={classes.taskProps}>

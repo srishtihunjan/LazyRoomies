@@ -21,3 +21,26 @@
     width: 20%;
     display: inline-block;
 }
+
+@media screen and (max-width: 500px) {
+    .dateField {
+        width: 20%;
+        display: inline-block;
+    }
+    
+    .taskField {
+        width: 60%;
+        display: inline-block;
+    }
+    
+    .assignedField {
+        width: 100%;
+        display: inline-block;
+    }
+    
+    .completedButton {
+        margin-left: 1.5em;
+        width: 100%;
+        display: inline-block;
+    }
+}
