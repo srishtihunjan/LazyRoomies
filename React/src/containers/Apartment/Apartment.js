@@ -33,8 +33,6 @@ class Apartment extends Component {
 
         axios.post(config.url + `apartments/`, { ...req })
             .then(res => {
-                console.log("Res:" + JSON.stringify(res));
-                console.log("State:" + JSON.stringify(this.state));
                 if (res.status === 201) {
                     //user created
                     sessionStorage.setItem('apartmentName', this.state.newApartmentName);
@@ -57,8 +55,6 @@ class Apartment extends Component {
 
         axios.post(config.url + `users/joinapt`, { ...req })
             .then(res => {
-                console.log("Join APT Res:" + JSON.stringify(res));
-                console.log("JOIN APT State:" + JSON.stringify(this.state));
                 if (res.status === 201) {
                     //user created
                     sessionStorage.setItem('apartmentName', this.state.existingApartmentName);
