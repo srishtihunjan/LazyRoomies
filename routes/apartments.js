@@ -16,6 +16,7 @@ router.get('/', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send("Error fetching apartment details");
+      return;
     }
     console.log('=> Apartment Info queried!');
     res.status(200);
@@ -29,6 +30,7 @@ router.get('/id/:id', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send("Error fetching apartment details");
+      return;
     }
     if (response != null && response != '') {
       console.log('=> Apartment Info queried!');
@@ -48,6 +50,7 @@ router.get('/name/:name', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send("Error fetching apartment details");
+      return;
     }
     console.log('=> Apartment Info queried!');
     res.status(200);
@@ -63,12 +66,14 @@ router.post('/', function (req, res, next) {
     if (err1) {
       console.log('=> Internal Server Error: ' + err1);
       res.status(500).send("Error creating apartment");
+      return;
     }
     console.log('=> Apt created with ID = ' + response._id);
     user.findByIdAndUpdate(req.body.userId, { apartmentName: req.body.name }, function (err2, update_response) {
       if (err2) {
         console.log('=> Internal Server Error: ' + err2);
         res.status(500).send("Error updating user");
+        return;
       }
       if (update_response && update_response != '') {
         console.log('=> User ID found and updated with apt info!');

@@ -12,6 +12,7 @@ router.get('/:apartmentName', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send('Error fetching task details');
+      return;
     }
     if (response && response != '') {
       console.log('=> Task Info queried!');
@@ -50,6 +51,7 @@ router.post('/insert', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send('Error inserting task list: ' + err);
+      return;
     }
     if (response && response != '') {
       console.log('=> Tasks inserted! ' + response);
@@ -87,6 +89,7 @@ router.post('/update', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send('Error inserting task list: ' + err);
+      return;
     }
     if (response && response != '') {
       console.log('=> Tasks Updated! ' + response);
@@ -145,6 +148,7 @@ router.post('/completed', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send('Error inserting task list: ' + err);
+      return;
     }
     if (response && response != '') {
       console.log('=> Tasks Updated! ' + response);
@@ -163,6 +167,7 @@ router.delete('/:id', function (req, res, next) {
     if (err) {
       console.log('=> ServerErr: Task Deletion => ' + err);
       res.status(500).send('Error deleting task: ' + err);
+      return;
     }
     if (response && response != '') {
       console.log('=> Task DELETED! ' + response);

@@ -16,6 +16,7 @@ router.get('/', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send('Server error fetching user details');
+      return;
     }
     console.log('=> User Info queried: ' + response);
     if (response && response != '') {
@@ -33,6 +34,7 @@ router.get('/:userId', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send('Error fetching users');
+      return;
     }
     console.log('=> Users queried!');
     res.status(200);
@@ -46,6 +48,7 @@ router.get('/login/:emailId/:password', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send('Server error fetching user details');
+      return;
     }
     console.log('=> User Info queried! ');
     if (response && response != '') {
@@ -64,6 +67,7 @@ router.get('/all/:aptName', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send('Server error fetching user details');
+      return;
     }
     console.log('=> User Info queried: ' + response);
     if (response && response != '') {
@@ -99,6 +103,7 @@ router.post('/', function (req, res, next) {
             console.log('EMAIL EXISTS err.errmsg = > ' + JSON.stringify(err1.errmg));
             console.log('=> Error creating user: ' + err1);
             res.status(500).send('Error inserting users');
+            return;
           }
           console.log('=> User created! ' + user_response);
           res.sendStatus(201);
@@ -116,10 +121,12 @@ router.post('/', function (req, res, next) {
         if (duplicateKeyErr.includes('duplicate key error collection')) {
           console.log('***********************DUPLICATE KEY****************************');
           res.status(401).send('Email already exists');
+          return;
         }
         console.log('=> Error creating user: ' + err);
         res.status(500);
         res.send('Internal_Server_Err: ' + err);
+        return;
       }
       console.log('=> User created!' + response);
       res.status(201);
@@ -134,6 +141,7 @@ router.post('/joinapt', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send('Error finding Apartment');
+      return;
     }
     if (response != null && response != '') {
       console.log('=> Apt created with ID = ' + response._id);
@@ -141,6 +149,7 @@ router.post('/joinapt', function (req, res, next) {
         if (err2) {
           console.log('=> Internal Server Error: ' + err2);
           res.status(500).send('Error updating apartment information in user');
+          return;
         }
         if (update_response) {
           console.log('=> User ID found and updated with apt info!');
