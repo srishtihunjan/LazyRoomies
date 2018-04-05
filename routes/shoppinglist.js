@@ -15,6 +15,7 @@ router.get('/:apartmentName', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send('Error fetching shopping list');
+      return;
     }
     console.log('=> ShoppingList queried! ' + response);
     res.status(200);
@@ -33,6 +34,7 @@ router.post('/', function (req, res, next) {
     if (err) {
       console.log('=> Internal Server Error: ' + err);
       res.status(500).send('Error updating shopping list');
+      return;
     }
     if (updateResponse && updateResponse !== '') {
       console.log('=> Apartment Exists. ShoppingList inserted! ' + updateResponse);
