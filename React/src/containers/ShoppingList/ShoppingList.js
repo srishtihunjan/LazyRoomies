@@ -114,7 +114,7 @@ class ShoppingList extends Component {
                     inputChangeHandler={this.inputChangeHandler}
                     enterPressedHandler={this.enterPressedHandler}
                     deleteEntryHandler={this.deleteEntryHandler} />
-                <div>
+                <div style={{ paddingLeft: "3em", paddingTop:"1em"}}>
                     <RaisedButton label="Save List" primary={true} style={style} onClick={this.saveList} />
                 </div>
                 <Snackbar
