@@ -10,8 +10,8 @@ const config = require('../../Config/Config');
 class ApartmentInfo extends Component {
 
     state = {
-        users: ["GSC", "YMJ", "SH"],
-        user: "YMJ",
+        users: [],
+        userId: null
     }
 
     componentDidMount = () => {
@@ -24,9 +24,9 @@ class ApartmentInfo extends Component {
                 this.setState({ users: [] });
             else {
                 let users = res.data.map(user => {
-                    return user.name;
+                    return {name: user.name, id: user._id};
                 });
-                this.setState({ users: users , user: sessionStorage.getItem('name')});
+                this.setState({ users: users , userId: sessionStorage.getItem('userId')});
             }
         })
         .catch(err => {
@@ -43,10 +43,8 @@ class ApartmentInfo extends Component {
             redirect = <Redirect to="/apartment" />;
         
         let userList = this.state.users.map((user) => {
-            console.log("user : " + user);
-            console.log(user === this.state.user);
             return (
-                <ListItem className={classes.user} key={user} primaryText={user} leftIcon={(user === this.state.user ? <ActionGrade style={{height:"30px", width:"48px"}}/> : <ToggleStar style={{height:"30px", width:"48px"}}/>)} insetChildren={true} />
+                <ListItem className={classes.user} key={user.id} primaryText={user.name} leftIcon={(user.id === this.state.userId ? <ActionGrade style={{height:"30px", width:"48px"}}/> : <ToggleStar style={{height:"30px", width:"48px"}}/>)} insetChildren={true} />
             );
         });
 
