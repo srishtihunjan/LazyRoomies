@@ -41,11 +41,11 @@ const taskItem = (props) => {
         </div>);
 
     const style =
-            window.screen.availWidth < 500 ? { margin: 15, width: "5%" } : { margin: 25 };
+        window.screen.availWidth < 500 ? { margin: 15, width: "5%" } : { margin: 25 };
 
     return (
         <Card>
-            <CardHeader children={cardHeaderChildren} />
+            <CardHeader children={cardHeaderChildren} style={{ marginTop: "0.5em" }} />
             <CardActions>
                 <RaisedButton label="Edit" primary={true} style={style} onClick={() => props.editTask(props.task, props.index)} />
                 <RaisedButton className={classes.deleteButton} label="Delete" secondary={true} style={style} onClick={() => props.deleteTask(props.task._id)} />
