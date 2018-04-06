@@ -40,9 +40,9 @@ const taskItem = (props) => {
             </div>
         </div>);
 
-    const style = {
-        margin: 25
-    };
+    const style =
+            window.screen.availWidth < 500 ? { margin: 15, width: "5%" } : { margin: 25 };
+
     return (
         <Card>
             <CardHeader children={cardHeaderChildren} />

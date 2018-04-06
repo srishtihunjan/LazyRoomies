@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import classes from './ListItem.css';
-import checkboxSmall from '../../../icons/checkboxsmall.png';
+import checkboxSmall from '../../../icons/checkMark.png';
 
 const listItem = (props) => {
     return (

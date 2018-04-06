@@ -1,7 +1,5 @@
 .Apartment {
     margin-left: 15%;
-    height: 450px;
-    width: 70%;
 }
 
 .apartmentOptions {
@@ -11,4 +9,16 @@
 
 .pageTitle {
     font-size: 2em;
+}
+
+@media screen and (max-width: 500px) {
+    .pageTitle {
+        margin-bottom: 0;
+    }
+
+    .apartmentOptions {
+        margin: 3em;
+        display: inline-block;
+    }
+    
 }

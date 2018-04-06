@@ -38,18 +38,13 @@
     display: block;
   }
   .headers2 {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-all;
-    word-break: break-word;
+    overflow: hidden;
     font-size: 1em;
     font-style: italic;
     width: 100%;
     display: block;
     margin: 0;
     float: none;
-   
-    border: red 1px solid;
   }
   .taskProps {
     margin: 0;
