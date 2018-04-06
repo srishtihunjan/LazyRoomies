@@ -225,7 +225,7 @@ class TaskDialog extends Component {
 
         return (
             <Dialog
-                title="Edit Task"
+                title={this.props.task ? "Edit Task" : "New Task"}
                 actions={actions}
                 modal={false}
                 open={this.props.editing}
