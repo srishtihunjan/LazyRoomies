@@ -139,13 +139,13 @@ class Calender extends Component {
             upcomingTasksForUser: upcomingTasksForUser
         });
 
-        console.log("overdue tasks : " + overdueTasks);
+        console.log("In transform data: ");
+        console.log("overdue tasks : " + JSON.stringify(overdueTasks));
         console.log("upcoming tasks : " + upcomingTasks);
     }
 
     markTaskAsCompleted = (task) => {
         let tempTask = { ...task };
-        tempTask.status = 'Completed';
 
         axios.post(config.url + `tasks/completed/`, tempTask)
             .then(res => {

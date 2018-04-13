@@ -127,6 +127,7 @@ router.post('/completed', function (req, res, next) {
 
   if (req.body.isRecurring === true) {
     var dueDate = new Date(req.body.dateDue);
+    var dueTime = new Date(req.body.timeDue);
     let newAssignedToList = [];
     if (req.body.assignedTo) {
       let list = String(req.body.assignedTo).split(',');
@@ -140,8 +141,17 @@ router.post('/completed', function (req, res, next) {
     var addDays = req.body.recurringPeriod === 'Daily' ? 1 :
       req.body.recurringPeriod === 'Weekly' ? 7 :
         req.body.recurringPeriod === 'Monthly' ? 30 : 0;
-    dueDate.setDate(dueDate.getDate() + addDays)
+        
+    dueDate.setDate(dueDate.getDate() + addDays);
     taskObject.dateDue = dueDate;
+
+    dueTime.setDate(dueTime.getDate() + addDays);
+    taskObject.timeDue = dueTime;
+
+    taskObject.status = 'Active';
+  }
+  else {
+    taskObject.status = 'Completed';
   }
 
   taskRouter.findByIdAndUpdate(req.body._id, taskObject, function (err, response) {
