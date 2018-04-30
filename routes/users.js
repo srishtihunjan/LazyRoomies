@@ -4,6 +4,7 @@ var path = require('path');
 var app = require('../app');
 var mongoose = require('mongoose');
 var schema = require('../model/schema');
+var email = require('../handlers/EmailHandler');
 var user = schema.User;
 var apartment = schema.Apartment;
 
@@ -167,4 +168,23 @@ router.post('/joinapt', function (req, res, next) {
   });
 });
 
+router.get('/remind/:fromUserName/:toUserId', function (req, res, next) {
+  user.findById(req.params.toUserId, function (err, response) {
+    if (err) {
+      console.log('=> Internal Server Error: ' + err);
+      res.status(500).send('Error fetching users');
+      return;
+    }
+    console.log('=> Users queried!');
+
+    let subject = 'Reminder to complete tasks';
+    let message = 'You have been reminded by '+ req.params.fromUserName +' to complete your tasks in the house '+response.apartmentName;
+    let toEmail = response.email;
+
+    email(toEmail, subject,  message);
+
+    res.status(200);
+    res.send('User Emailed');
+  });
+});
 module.exports = router;
