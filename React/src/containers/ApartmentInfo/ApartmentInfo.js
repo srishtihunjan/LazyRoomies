@@ -5,6 +5,7 @@ import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ToggleStar from 'material-ui/svg-icons/toggle/star-border';
 import { Redirect } from 'react-router-dom';
 import Snackbar from 'material-ui/Snackbar';
+import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 const config = require('../../Config/Config');
 
@@ -54,7 +55,7 @@ class ApartmentInfo extends Component {
 
     renderAlertButton = (user) => {
         if(user.id !== this.state.userId)
-            return <button onClick={() => this.alertUser(user.id, user.name)}>Remind {user.name}</button>;
+            return <RaisedButton onClick={() => this.alertUser(user.id, user.name)} label={"Remind "+user.name} primary={true} />;
         return null;
     }
 

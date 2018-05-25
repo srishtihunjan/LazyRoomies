@@ -18,10 +18,6 @@ var app = express();
 // CORS Middleware
 app.use(cors());
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,6 +31,11 @@ app.use('/shoppinglist', shoppinglistRouter);
 app.use('/apartments', apartmentRouter);
 app.use('/users', usersRouter);
 
+//making it ready for deploy. telling express to send index file on request, and letting it know to serve up static files.
+app.use( express.static( `${__dirname}/React/build` ) );
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, 'React/build/index.html'));
+});
 
 app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -71,8 +72,9 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
+  console.log(err);
   res.status(err.status || 500);
-  res.render('error');
+  res.send('error');
 });
 
 module.exports = app;
