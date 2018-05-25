@@ -48,7 +48,7 @@ var server = app.listen(PORT, function () {
   console.log('Listening on port ' + PORT);
 });
 
-mongoose.connect('mongodb://localhost:27017/lazyRoomies', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/lazyRoomies', {
   server: {
     reconnectTries: Number.MAX_VALUE,
     reconnectInterval: 1000

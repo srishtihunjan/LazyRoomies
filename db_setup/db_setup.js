@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
 const dbQuery = (callback) => {
-    let server = process.env.MONGODB_URI || 'mongodb://localhost:27017';
-    mongoose.connect(server+'/lazyRoomies', {
+    let server = process.env.MONGODB_URI || 'mongodb://localhost:27017/lazyRoomies';
+    mongoose.connect(server, {
         server: {
             // sets how many times to try reconnecting
             reconnectTries: Number.MAX_VALUE,
